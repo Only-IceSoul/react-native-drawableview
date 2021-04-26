@@ -1,0 +1,45 @@
+{
+  "name": "react-native-drawableview",
+  "title": "React Native Drawableview",
+  "version": "0.1",
+  "description": "TODO",
+  "main": "index.ts",
+  "files": [
+    "README.md",
+    "android",
+    "index.ts",
+    "ios",
+    "react-native-drawableview.podspec"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Only-IceSoul/react-native-drawableview.git",
+    "baseUrl": "https://github.com/Only-IceSoul/react-native-drawableview"
+  },
+  "keywords": [
+    "react-native",
+    "drawableview",
+    "drawable",
+    "shadow",
+    "view",
+    "react native"
+  ],
+  "author": {
+    "name": "Juan",
+    "email": "justinjlf21@gmail.com"
+  },
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": ">=16.8.1",
+    "react-native": ">=0.60.0-rc.0 <1.0.x"
+  },
+  "devDependencies": {
+    "react": "^16.9.0",
+    "react-native": "^0.61.5"
+  }
+}
