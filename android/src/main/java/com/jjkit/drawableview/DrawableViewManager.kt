@@ -32,19 +32,20 @@ class DrawableViewManager : ViewGroupManager<DrawableView>() {
             val pathVb:FloatArray = try {
                 if(props.hasKey("pathViewBox")){
                     val ra  = props.getArray("pathViewBox")
-                    val x = ra.getDouble(0).toFloat()
-                    val y = ra.getDouble(1).toFloat()
-                    val w = ra.getDouble(2).toFloat()
-                    val h = ra.getDouble(3).toFloat()
+
+                    val x = try { ra!!.getDouble(0) } catch (e:Exception) { 0 }.toFloat()
+                    val y = try { ra!!.getDouble(1) } catch (e:Exception) { 0 }.toFloat()
+                    val w = try { ra!!.getDouble(2) } catch (e:Exception) { 0 }.toFloat()
+                    val h = try { ra!!.getDouble(3) } catch (e:Exception) { 0 }.toFloat()
 
                     floatArrayOf(x,y,w,h)
                 }else{
                     floatArrayOf(0f,0f,0f,0f)
                 }
 
-            }catch(e: Exception) {  floatArrayOf(0f,0f,0f,0f) } //
+            }catch(e: Exception) {  floatArrayOf(0f,0f,0f,0f) }
             val pathAspect = try { props.getInt("pathViewBoxAspect") }catch(e: Exception) {  0 } //
-            val pathAlign = try { props.getString("pathViewBoxAlign") }catch(e: Exception) {  "xMidYMid" } //
+            val pathAlign = try { props.getString("pathViewBoxAlign")!! }catch(e: Exception) {  "xMidYMid" } //
             val pathScaleX = try { props.getDouble("pathScaleX") }catch(e: Exception) {  1 }.toFloat() //
             val pathScaleY = try { props.getDouble("pathScaleY") }catch(e: Exception) {  1 }.toFloat() //
             val pathRotation = try { props.getDouble("pathRotation") }catch(e: Exception) {  0 }.toFloat() //
