@@ -69,7 +69,8 @@ const DrawableView : React.FC<DrawableProps & any> = (props) => {
             if(attrs.path){
                 o.path = attrs.path.d
                 let vb =  extractViewBox({ viewBox: attrs.path.viewBox , preserveAspectRatio: attrs.path.preserveAspectRatio })
-                o.pathViewBox = [vb.minX,vb.minY,vb.vbWidth,vb.vbHeight,vb.meetOrSlice]
+                o.pathViewBox = [vb.minX,vb.minY,vb.vbWidth,vb.vbHeight]
+                o.pathViewBoxAspect = vb.meetOrSlice
                 o.pathViewBoxAlign = vb.align
              }
     
