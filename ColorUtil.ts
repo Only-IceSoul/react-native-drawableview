@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
+import { Color } from './types';
 
- type Color = number | number[] | string;
+
 export const colors: { [colorname: string]: number[] } = {
   aliceblue: [240, 248, 255],
   antiquewhite: [250, 235, 215],
@@ -343,10 +344,19 @@ function rgbFromString(string: string) {
       }
 
         let color = colors[match[1]];
-        rgb[0] = color[0] / 255
-        rgb[1] = color[1]  / 255
-        rgb[2] = color[2]  / 255
-        rgb[3] = 1
+        if(color === undefined){
+          console.warn('Invalid formatted color prop: ', string);
+          rgb[0] = 0
+          rgb[1] = 0
+          rgb[2] = 0
+          rgb[3] = 0
+        }else{
+          rgb[0] = color[0] / 255
+          rgb[1] = color[1]  / 255
+          rgb[2] = color[2]  / 255
+          rgb[3] = 1
+        }
+        
   } else {
     return null;
   }
@@ -438,8 +448,7 @@ export default function extractColor(color?: Color) : number | null {
     ((a === undefined ? 0xff000000 : Math.round(a * 255) << 24) |
       (Math.round(r * 255) << 16) |
       (Math.round(g * 255) << 8) |
-      Math.round(b * 255)) >>>
-    0;
+      Math.round(b * 255)) >>> 0;
 
-  return integerColor(int32Color);
+  return toSignedInt32(int32Color);
 }

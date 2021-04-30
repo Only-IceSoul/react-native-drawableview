@@ -1,154 +1,111 @@
-import { requireNativeComponent } from 'react-native';
+import { requireNativeComponent,View, ViewProps, ViewStyle } from 'react-native';
 import React, { useMemo } from 'react'
 import extractColor from './ColorUtil';
 import extractViewBox from './ViewBox';
+import { Color,NumberProp } from './types';
 
-const JJDrawableView = requireNativeComponent('JJDrawableView');
+const Drawable = requireNativeComponent('Drawable');
+
+type DrawableAttrs = {
+
+    borderRadiusTopLeft?: number
+    borderRadiusTopRight?: number
+    borderRadiusBottomLeft?: number
+    borderRadiusBottomRight?: number
+
+    path?:{
+        d:string
+        viewBox:string | NumberProp[] 
+        preserveAspectRatio?:string
+    }
+    pathScale?:{ x:number,y:number }
+    pathRotation?: number
+    pathTranslation?:{
+        dx:number,
+        dy:number,
+        percentageValue:boolean
+    }
+    shadowColor?: Color
+    shadowOffset?: {x: number,y:number}
+    shadowOpacity?: number
+    shadowRadius?:number
+
+    strokeWidth?:number,
+    strokeColor?: Color
+
+    fillColor?:number | number[] | string;
+    backgroundColor?: Color
 
 
+}
 
+interface DrawableProps {
 
-const DrawableView = (props:any) => {
-    const {style,...others} = props
+    attrs?: DrawableAttrs
+}
 
-    const {backgroundColor,elevation , path,
-        pathOffset,
-        shadowScale,
-        scale,
+const DrawableView : React.FC<DrawableProps & any> = (props) => {
+    const {style,attrs,...others} = props
+
+    const {
+        backgroundColor,
+        elevation,
         shadowColor,
         shadowOffset,
         shadowOpacity,
-        borderBottomColor,
-        borderBottomEndRadius,
-        borderBottomLeftRadius,
-        borderBottomWidth,
-        borderBottomRightRadius,
-        borderBottomStartRadius,
-        borderTopColor,
-        borderTopEndRadius,
-        borderTopLeftRadius,
-        borderTopRightRadius,
-        borderTopStartRadius,
-        borderTopWidth,
-        borderLeftColor,
-        borderLeftWidth,
-        borderRightColor,
-        borderRightWidth,
-        borderStartColor,
-        borderStartWidth,
-        borderEndColor,
-        borderEndWidth,
-        borderColor,
-        borderRadius,
-        borderStyle,
-        borderWidth,
-        ...othersStyle } = style
+        shadowRadius,
+        ...othersStyle 
+    } = style
 
+    const attrsComputed = useMemo(()=>{
+       
+        var o:any = {}
+        if(attrs){
+            o.borderRadiusTopLeft =  attrs.borderRadiusTopLeft || 0
+            o.borderRadiusTopRight =  attrs.borderRadiusTopRight || 0
+            o.borderRadiusBottomLeft =  attrs.borderRadiusBottomLeft || 0
+            o.borderRadiusBottomRight =  attrs.borderRadiusBottomRight || 0
+            
+            if(attrs.path){
+                o.path = attrs.path.d
+                let vb =  extractViewBox({ viewBox: attrs.path.viewBox , preserveAspectRatio: attrs.path.preserveAspectRatio })
+                o.pathViewBox = [vb.minX,vb.minY,vb.vbWidth,vb.vbHeight,vb.meetOrSlice]
+                o.pathViewBoxAlign = vb.align
+             }
     
-
- 
-    const bgColor = useMemo(()=>{
-         return extractColor(backgroundColor)
-    },[props.style])
-
-    const borColor = useMemo(()=>{
-        return extractColor(borderColor)
-   },[props.style])
-
-   const vBox = useMemo(()=>{
-       if(path){
-          return extractViewBox({ viewBox: path.viewBox , preserveAspectRatio: path.preserveAspectRatio })
-       }
-       return  {
-        minX: 0,
-        minY: 0,
-        vbWidth: 0,
-        vbHeight: 0,
-        align:  'xMidYMid',
-        meetOrSlice: 0,
-      };
-     },[props.style])
-
-    const so = useMemo(()=>{
-        var base = borderRadius || 0
-        var o = {
-            rtl:base,
-            rtr:base,
-            rbl:base,
-            rbr:base,
-            isTopRtl:false,
-            isBottomRtl:false,
+             o.pathScaleX = attrs.pathScale?.x || undefined
+             o.pathScaleY = attrs.pathScale?.y || undefined
+             o.pathRotation = attrs.pathRotation
+             o.pathTranslationX = attrs.pathTranslation?.dx || undefined
+             o.pathTranslationY = attrs.pathTranslation?.dy || undefined
+             o.pathTranslationIsPercent = attrs.pathTranslation?.percentageValue
+    
+             o.shadowOpacity = attrs.shadowOpacity
+             o.shadowRadius = attrs.shadowRadius
+             o.shadowOffsetX = attrs.shadowOffset?.x || undefined
+             o.shadowOffsetY = attrs.shadowOffset?.y || undefined
+             o.shadowColor = extractColor(attrs.shadowColor)
+    
+             o.strokeWidth = attrs.strokeWidth
+             o.strokeColor = extractColor(attrs.strokeColor)
+    
+             o.fillColor = extractColor(attrs.fillColor)
+             o.backgroundColor = extractColor(attrs.backgroundColor)
+    
         }
       
-        o.rtl =  borderTopLeftRadius || base
-        o.rtr =  borderTopRightRadius || base
-        o.rbl =  borderBottomLeftRadius || base
-        o.rbr =  borderBottomRightRadius || base
-
-
-        if( borderTopStartRadius ) {
-            o.isTopRtl = true
-            o.rtl =  borderTopStartRadius
-        }
-        if( borderTopEndRadius ) {
-            o.isTopRtl = true
-            o.rtr =  borderTopEndRadius
-        }
-        if( borderBottomStartRadius ) {
-            o.isBottomRtl = true
-            o.rbl =  borderBottomStartRadius
-        }
-        if( borderBottomEndRadius ) {
-            o.isBottomRtl = true
-            o.rbr =  borderBottomEndRadius
-        }
-
 
         return o
-    },[props.style])
+
+    },[props.attrs])
     
 
 
     return (  
       
-         
-            <JJDrawableView {...others} style={othersStyle} nativeProps={{
-
-                radiusTopLeft: so.rtl,
-                radiusTopRight: so.rtr,
-                radiusBottomLeft: so.rbl,
-                radiusBottomRight: so.rbr,
-                isBorderTopRtl: so.isTopRtl, 
-                isBorderBottomRtl:so.isBottomRtl,
-
-                strokeColor:borColor,
-                strokeWidth:borderWidth,
-
-                shadowScale:shadowScale,
-                shadowOpacity: shadowOpacity ,
-                shadowOffsetX:shadowOffset ? shadowOffset.width || 0 : 0,
-                shadowOffsetY:shadowOffset ? shadowOffset.height || 0 : 0,
-                shadowColor:shadowColor,
-
-                elevation:elevation,
-                fillColor:bgColor,
-           
-
-                path:path ? path.d : null,
-                vbMinX:vBox.minX,
-                vbMinY:vBox.minY,
-                vbMeetOrSlice:vBox.meetOrSlice,
-                vbAlign:vBox.align,
-                vbWidth:vBox.vbWidth,
-                vbHeight:vBox.vbHeight,
-                pathOffsetX:pathOffset ? pathOffset.x || 0 : 0,
-                pathOffsetY:pathOffset ? pathOffset.y || 0: 0,
-                scale:scale,
-              
-
-                
-            }} />
- 
+            //@ts-ignore
+            <Drawable {...others} style={othersStyle} attrs={attrsComputed} />
+        
     )
 }
 

@@ -16,6 +16,6 @@
 @interface
 RCT_EXTERN_MODULE(Drawable,RCTViewManager)
 
-RCT_EXPORT_VIEW_PROPERTY(nativeProps, NSDictionary)
+RCT_EXPORT_VIEW_PROPERTY(attrs, NSDictionary)
 
 @end
