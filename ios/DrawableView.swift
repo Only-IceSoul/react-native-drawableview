@@ -63,7 +63,7 @@ class DrawableView: UIView {
             let fc = props!["fillColor"] as? Int ?? 0
             let bg = props!["backgroundColor"] as? Int ?? 0
             
-            let viewBoxAspet:ViewBox.AspectRatio = pvbas == 0 ? .meet : (pvb[4] == 1 ? .slice : .none)
+            let viewBoxAspet:ViewBox.AspectRatio = pvbas == 0 ? .meet : (pvbas == 1 ? .slice : .none)
             
             
             if(p != nil){
