@@ -1,8 +1,8 @@
 {
   "name": "react-native-drawableview",
   "title": "React Native Drawableview",
-  "version": "0.3.0",
-  "description": "TODO",
+  "version": "0.4.0",
+  "description": "Draw svg paths with shadow, rects, roundedRect",
   "main": "index.ts",
   "files": [
     "README.md",
@@ -12,6 +12,7 @@
     "DrawableView.tsx",
     "ColorUtil.ts",
     "ViewBox.ts",
+    "types.ts",
     "react-native-drawableview.podspec"
   ],
   "scripts": {
@@ -28,7 +29,10 @@
     "drawable",
     "shadow",
     "view",
-    "react native"
+    "react native",
+    "svg view",
+    "svg",
+    "path"
   ],
   "author": {
     "name": "Juan",
