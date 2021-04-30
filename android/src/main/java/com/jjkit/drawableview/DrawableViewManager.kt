@@ -81,9 +81,9 @@ class DrawableViewManager : ViewGroupManager<DrawableView>() {
                     .setPathRotation(pathRotation)
 
             if(pathIsTransPerValue){
-                mDrawable.setPathTranslation(toDip(pathTx,view),toDip(pathTy,view),0f,0f)
+                mDrawable.setPathTranslation(pathTx,pathTy,0f,0f)
             }else{
-                mDrawable.setPathTranslation(pathTx, pathTy)
+                mDrawable.setPathTranslation(toDip(pathTx,view),toDip(pathTy,view))
             }
 
             mDrawable.setShadowRadius(toDip(shadowRadius,view))
