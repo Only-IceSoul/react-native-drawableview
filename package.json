@@ -1,7 +1,7 @@
 {
   "name": "react-native-drawableview",
   "title": "React Native Drawableview",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "Draw svg paths with shadow, rects, roundedRect",
   "main": "index.js",
   "files": [

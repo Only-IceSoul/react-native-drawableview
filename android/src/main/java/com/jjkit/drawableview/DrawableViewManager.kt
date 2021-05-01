@@ -3,6 +3,7 @@ package com.jjkit.drawableview
 import android.content.Context
 import android.graphics.Color
 import android.util.TypedValue
+import android.view.View
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.uimanager.*
@@ -16,7 +17,9 @@ class DrawableViewManager : ViewGroupManager<DrawableView>() {
     }
 
     override fun createViewInstance(reactContext: ThemedReactContext): DrawableView {
-        return  DrawableView(reactContext as Context)
+        val v = DrawableView(reactContext as Context)
+        v.setLayerType(View.LAYER_TYPE_SOFTWARE,null)
+        return v
     }
 
     @ReactProp(name = "attrs")
