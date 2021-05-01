@@ -88,9 +88,9 @@ class DrawableView: UIView {
                 
               
             if(ptp){
-                mDrawable.setTranslation(percentX: ptx, percentY: pty, plusX: 0, plusY: 0)
+                mDrawable.setPathTranslation(percentX: ptx, percentY: pty, plusX: 0, plusY: 0)
             }else{
-                mDrawable.setTranslation(dx: ptx, dy: pty)
+                mDrawable.setPathTranslation(dx: ptx, dy: pty)
             }
            
             mDrawable.invalidateSelf()
