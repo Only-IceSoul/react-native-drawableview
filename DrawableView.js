@@ -1,50 +1,50 @@
-import { requireNativeComponent,View, ViewProps, ViewStyle } from 'react-native';
+import { requireNativeComponent } from 'react-native';
 import React, { useMemo } from 'react'
 import extractColor from './ColorUtil';
 import extractViewBox from './ViewBox';
-import { Color,NumberProp } from './types';
-
-const Drawable = requireNativeComponent('Drawable');
-
-type DrawableAttrs = {
-
-    borderRadiusTopLeft?: number
-    borderRadiusTopRight?: number
-    borderRadiusBottomLeft?: number
-    borderRadiusBottomRight?: number
-
-    path?:{
-        d:string
-        viewBox:string | NumberProp[] 
-        preserveAspectRatio?:string
-    }
-    pathScale?:{ x:number,y:number }
-    pathRotation?: number
-    pathTranslation?:{
-        dx:number,
-        dy:number,
-        percentageValue:boolean
-    }
-    shadowColor?: Color
-    shadowOffset?: {x: number,y:number}
-    shadowOpacity?: number
-    shadowRadius?:number
-
-    strokeWidth?:number,
-    strokeColor?: Color
-
-    fillColor?:number | number[] | string;
-    backgroundColor?: Color
 
 
-}
+const Drawable = requireNativeComponent('Drawable',null);
 
-interface DrawableProps {
+// type DrawableAttrs = {
 
-    attrs?: DrawableAttrs
-}
+//     borderRadiusTopLeft?: number
+//     borderRadiusTopRight?: number
+//     borderRadiusBottomLeft?: number
+//     borderRadiusBottomRight?: number
 
-const DrawableView : React.FC<DrawableProps & any> = (props) => {
+//     path?:{
+//         d:string
+//         viewBox:string | NumberProp[] 
+//         preserveAspectRatio?:string
+//     }
+//     pathScale?:{ x:number,y:number }
+//     pathRotation?: number
+//     pathTranslation?:{
+//         dx:number,
+//         dy:number,
+//         percentageValue:boolean
+//     }
+//     shadowColor?: Color
+//     shadowOffset?: {x: number,y:number}
+//     shadowOpacity?: number
+//     shadowRadius?:number
+
+//     strokeWidth?:number,
+//     strokeColor?: Color
+
+//     fillColor?:number | number[] | string;
+//     backgroundColor?: Color
+
+
+// }
+
+// interface DrawableProps {
+
+//     attrs?: DrawableAttrs
+// }
+
+const DrawableView = (props) => {
     const {style,attrs,...others} = props
 
     const {
@@ -59,7 +59,7 @@ const DrawableView : React.FC<DrawableProps & any> = (props) => {
 
     const attrsComputed = useMemo(()=>{
        
-        var o:any = {}
+        var o = {}
         if(attrs){
             o.borderRadiusTopLeft =  attrs.borderRadiusTopLeft || 0
             o.borderRadiusTopRight =  attrs.borderRadiusTopRight || 0

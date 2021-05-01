@@ -1,8 +1,5 @@
-import { Platform } from 'react-native';
-import { Color } from './types';
 
-
-export const colors: { [colorname: string]: number[] } = {
+export const colors = {
   aliceblue: [240, 248, 255],
   antiquewhite: [250, 235, 215],
   aqua: [0, 255, 255],
@@ -152,19 +149,9 @@ export const colors: { [colorname: string]: number[] } = {
   yellow: [255, 255, 0],
   yellowgreen: [154, 205, 50],
 };
-export const colorNames: { [colorname: string]: number | void } = {};
-for (const name in colors) {
-  if (colors.hasOwnProperty(name)) {
-    const color: number[] = colors[name];
-    const r = color[0];
-    const g = color[1];
-    const b = color[2];
-    colorNames[name] = (0xff000000 | (r << 16) | (g << 8) | b) >>> 0;
-  }
-}
-Object.freeze(colorNames);
 
-function hslToRgb(_h: number, _s: number, _l: number, a: number) {
+
+function hslToRgb(_h, _s, _l, a) {
   const h = _h / 360;
   const s = _s / 100;
   const l = _l / 100;
@@ -213,7 +200,7 @@ function hslToRgb(_h: number, _s: number, _l: number, a: number) {
   return rgb;
 }
 
-function hwbToRgb(_h: number, _w: number, _b: number, a: number) {
+function hwbToRgb(_h, _w, _b, a) {
   const h = _h / 360;
   let wh = _w / 100;
   let bl = _b / 100;
@@ -280,7 +267,7 @@ function hwbToRgb(_h: number, _w: number, _b: number, a: number) {
   return [r, g, b, a];
 }
 
-function clamp(num: number, min: number, max: number) {
+function clamp(num, min, max) {
   return Math.min(Math.max(min, num), max);
 }
 
@@ -290,7 +277,11 @@ const rgba = /^rgba?\(\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*(?:,\s*(
 const per = /^rgba?\(\s*([+-]?[\d.]+)%\s*,\s*([+-]?[\d.]+)%\s*,\s*([+-]?[\d.]+)%\s*(?:,\s*([+-]?[\d.]+)\s*)?\)$/;
 const keyword = /(\D+)/;
 
-function rgbFromString(string: string) {
+function rgbFromString(string) {
+
+  if(typeof string != 'string'){
+    return null
+  }
   let rgb = [0, 0, 0, 1];
   let match;
   let i;
@@ -370,7 +361,10 @@ function rgbFromString(string: string) {
 
 const hslRegEx = /^hsla?\(\s*([+-]?(?:\d*\.)?\d+)(?:deg)?\s*,\s*([+-]?[\d.]+)%\s*,\s*([+-]?[\d.]+)%\s*(?:,\s*([+-]?[\d.]+)\s*)?\)$/;
 
-function rgbFromHslString(string: string) : number[] | null {
+function rgbFromHslString(string) {
+  if(typeof string != 'string'){
+    return null
+  }
   const match = string.match(hslRegEx);
   if (!match) {
     return null;
@@ -386,7 +380,10 @@ function rgbFromHslString(string: string) : number[] | null {
 
 const hwbRegEx = /^hwb\(\s*([+-]?\d*[.]?\d+)(?:deg)?\s*,\s*([+-]?[\d.]+)%\s*,\s*([+-]?[\d.]+)%\s*(?:,\s*([+-]?[\d.]+)\s*)?\)$/;
 
-function rgbFromHwbString(string: string) : number[] | null {
+function rgbFromHwbString(string) {
+  if(typeof string != 'string'){
+    return null
+  }
   const match = string.match(hwbRegEx);
   if (!match) {
     return null;
@@ -400,7 +397,10 @@ function rgbFromHwbString(string: string) : number[] | null {
   return hwbToRgb(h, w, b, a);
 }
 
-function colorFromString(string: string):number[] | null {
+function colorFromString(string) {
+  if(typeof string != 'string'){
+    return null
+  }
   const prefix = string.substring(0, 3).toLowerCase();
 
   switch (prefix) {
@@ -413,19 +413,12 @@ function colorFromString(string: string):number[] | null {
   }
 }
 
-const identity = (x: number) => x;
 
-const toSignedInt32 = (x: number) => x | 0x0;
+const toSignedInt32 = (x) => x | 0x0;
 
-// Android use 32 bit *signed* integer to represent the color
-// We utilize the fact that bitwise operations in JS also operates on
-// signed 32 bit integers, so that we can use those to convert from
-// *unsigned* to *signed* 32bit in that way.
-export const integerColor =
-  Platform.OS === 'android' ? toSignedInt32 : identity;
-
+// color = number | number[] | string;
 // Returns 0xaarrggbb or null
-export default function extractColor(color?: Color) : number | null {
+export default function extractColor(color) {
   if (typeof color === 'number') {
     if (color >>> 0 === color && color >= 0 && color <= 0xffffffff) {
       return integerColor(color);
@@ -438,6 +431,7 @@ export default function extractColor(color?: Color) : number | null {
   if (!Array.isArray(parsedColor)) {
     return null;
   }
+
 
   const r = parsedColor[0];
   const g = parsedColor[1];
