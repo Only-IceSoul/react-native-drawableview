@@ -39,10 +39,6 @@ const Drawable = requireNativeComponent('Drawable',null);
 
 // }
 
-// interface DrawableProps {
-
-//     attrs?: DrawableAttrs
-// }
 
 const DrawableView = (props) => {
     const {style,attrs,...others} = props
@@ -74,17 +70,17 @@ const DrawableView = (props) => {
                 o.pathViewBoxAlign = vb.align
              }
     
-             o.pathScaleX = attrs.pathScale?.x || undefined
-             o.pathScaleY = attrs.pathScale?.y || undefined
+             o.pathScaleX = attrs.pathScale?.x
+             o.pathScaleY = attrs.pathScale?.y
              o.pathRotation = attrs.pathRotation
-             o.pathTranslationX = attrs.pathTranslation?.dx || undefined
-             o.pathTranslationY = attrs.pathTranslation?.dy || undefined
+             o.pathTranslationX = attrs.pathTranslation?.dx
+             o.pathTranslationY = attrs.pathTranslation?.dy
              o.pathTranslationIsPercent = attrs.pathTranslation?.percentageValue
     
              o.shadowOpacity = attrs.shadowOpacity
              o.shadowRadius = attrs.shadowRadius
-             o.shadowOffsetX = attrs.shadowOffset?.x || undefined
-             o.shadowOffsetY = attrs.shadowOffset?.y || undefined
+             o.shadowOffsetX = attrs.shadowOffset?.x
+             o.shadowOffsetY = attrs.shadowOffset?.y
              o.shadowColor = extractColor(attrs.shadowColor)
     
              o.strokeWidth = attrs.strokeWidth
