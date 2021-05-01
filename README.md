@@ -1,18 +1,22 @@
 # DrawableView
 
-Draw svg paths with shadows and roundedrects
+Draw svg paths with shadows and rects
+
+android: api 21+   
+ios : 11.0+   
 
 <img src="./src/demo.jpg" width="300">
 
 
 ## Getting started
 
-`$ npm install react-native-drawableview --save`
+`$ npm install react-native-drawableview --save`  
+`$ react-native link react-native-drawableview`  
+  
+or
 
-### Mostly automatic installation
-
-`$ react-native link react-native-drawableview`
-
+`$ yarn add react-native-drawableview `
+    
 
 # Usage
 ```javascript
