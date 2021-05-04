@@ -27,10 +27,12 @@ type DrawableAttrs =  {
     shadowOpacity?: number
     shadowRadius?:number
 
-    strokeWidth?:number,
+    strokeWidth?:number
     strokeColor?: Color
+    strokeStart?:number
+    strokeEnd?:number
 
-    fillColor?:number | number[] | string;
+    fillColor?:number | number[] | string
     backgroundColor?: Color
 
 

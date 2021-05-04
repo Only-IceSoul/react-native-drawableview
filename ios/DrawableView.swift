@@ -59,6 +59,8 @@ class DrawableView: UIView {
             
             let strokeW = props!["strokeWidth"] as? CGFloat ?? 0
             let strokeC = props!["strokeColor"] as? Int ?? 0
+            let strokeStart = props!["strokeStart"] as? CGFloat ?? 0
+            let strokeEnd = props!["strokeEnd"] as? CGFloat ?? 1
             
             let fc = props!["fillColor"] as? Int ?? 0
             let bg = props!["backgroundColor"] as? Int ?? 0
@@ -86,7 +88,9 @@ class DrawableView: UIView {
                 .setFillColor(c: fc == 0 ? UIColor.clear.cgColor : UIColor.parseSignedInt(argb: fc).cgColor)
                 .setBackgroundColor(c: bg == 0 ? UIColor.clear.cgColor : UIColor.parseSignedInt(argb: bg).cgColor)
                 
-              
+            
+            mDrawable.strokeStart = strokeStart
+            mDrawable.strokeEnd = strokeEnd
             if(ptp){
                 mDrawable.setPathTranslation(percentX: ptx, percentY: pty, plusX: 0, plusY: 0)
             }else{

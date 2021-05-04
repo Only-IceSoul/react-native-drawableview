@@ -32,7 +32,8 @@ const Drawable = requireNativeComponent('Drawable',null);
 
 //     strokeWidth?:number,
 //     strokeColor?: Color
-
+//     strokeStart?:number
+//     strokeEnd?:number
 //     fillColor?:number | number[] | string;
 //     backgroundColor?: Color
 
@@ -85,7 +86,9 @@ const DrawableView = (props) => {
     
              o.strokeWidth = attrs.strokeWidth
              o.strokeColor = extractColor(attrs.strokeColor)
-    
+             o.strokeStart = attrs.strokeStart
+             o.strokeEnd = attrs.strokeEnd
+             
              o.fillColor = extractColor(attrs.fillColor)
              o.backgroundColor = extractColor(attrs.backgroundColor)
     
