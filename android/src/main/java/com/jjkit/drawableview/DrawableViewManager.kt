@@ -64,6 +64,8 @@ class DrawableViewManager : ViewGroupManager<DrawableView>() {
 
             val strokeWidth = try { props.getDouble("strokeWidth") }catch(e: Exception) {   0 }.toFloat() //
             val strokeColor = try { props.getInt("strokeColor") }catch(e: Exception) {   Color.BLACK } //
+            val strokeStart = try { props.getDouble("strokeStart") }catch(e: Exception) {   0 }.toFloat() //
+            val strokeEnd = try { props.getDouble("strokeEnd") }catch(e: Exception) { 0 }.toFloat() //
 
             val fillColor = try { props.getInt("fillColor") }catch(e: Exception) {   Color.TRANSPARENT } //
             val bg = try { props.getInt("backgroundColor") }catch(e: Exception) {   Color.TRANSPARENT } //
@@ -97,6 +99,8 @@ class DrawableViewManager : ViewGroupManager<DrawableView>() {
                     .setStrokeColor(strokeColor)
                     .setFillColor(fillColor)
                     .setBackgroundColor(bg)
+                    .setStrokeStart(strokeStart)
+                    .setStrokeEnd(strokeEnd)
 
 
 

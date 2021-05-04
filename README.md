@@ -79,6 +79,8 @@ import Drawableview from 'react-native-drawableview';
 | shadowRadius | shadow radius | Number | 1 |
 | strokeWidth | line width | Number | 0 |
 | strokeColor | line color | Color | 'black' |
+| strokeStart | the start 0 to 1 | Number | 0 |
+| strokeEnd | the end 0 to 1 | Number | 1 |
 | fillColor | set the fill color  | Color | 'transparent' |
 | backgroundColor | set the bg | Color | 'transparent' |
 
