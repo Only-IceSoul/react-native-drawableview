@@ -89,8 +89,8 @@ class DrawableView: UIView {
                 .setBackgroundColor(c: bg == 0 ? UIColor.clear.cgColor : UIColor.parseSignedInt(argb: bg).cgColor)
                 
             
-            mDrawable.strokeStart = strokeStart
-            mDrawable.strokeEnd = strokeEnd
+              mDrawable.setStrokeStart(s: strokeStart)
+            mDrawable.setStrokeEnd(e: strokeEnd)
             if(ptp){
                 mDrawable.setPathTranslation(percentX: ptx, percentY: pty, plusX: 0, plusY: 0)
             }else{
