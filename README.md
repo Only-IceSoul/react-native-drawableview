@@ -3,7 +3,7 @@
 Draw svg paths with shadows and rects
 
 android: api 21+   
-ios : 11.0+   
+ios : 10.0+   
 
 <img src="./src/demo.jpg" width="300">
 

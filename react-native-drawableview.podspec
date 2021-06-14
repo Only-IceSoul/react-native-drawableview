@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   # optional - use expanded license entry instead:
   # s.license    = { :type => "MIT", :file => "LICENSE" }
   s.authors      = { "Juan Laura" => "justinjlf21@gmail.com" }
-  s.platforms    = { :ios => "11.0" }
+  s.platforms    = { :ios => "10.0" }
   s.source       = { :git => "https://github.com/github_account/react-native-drawableview.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,c,cc,cpp,m,mm,swift}"
@@ -25,6 +25,6 @@ Pod::Spec.new do |s|
 
   s.dependency "React"
   # ...
-  s.dependency "jjutils", '~> 1.3.0'
+  s.dependency "jjutils", '~> 1.4.0'
 end
 
