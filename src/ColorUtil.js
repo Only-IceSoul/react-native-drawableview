@@ -414,22 +414,22 @@ function colorFromString(string) {
 }
 
 
-const toSignedInt32 = (x) => x | 0x0;
+const toUInt32 = (x) => x | 0x0;
 
 // color = number | number[] | string;
 // Returns 0xaarrggbb or null
 export default function extractColor(color) {
   if (typeof color === 'number') {
     if (color >>> 0 === color && color >= 0 && color <= 0xffffffff) {
-      return integerColor(color);
+      return toUInt32(color);
     }
-    return null;
+    return 0;
   }
 
   const parsedColor =
     typeof color === 'string' ? colorFromString(color) : color;
   if (!Array.isArray(parsedColor)) {
-    return null;
+    return 0;
   }
 
 
@@ -444,5 +444,5 @@ export default function extractColor(color) {
       (Math.round(g * 255) << 8) |
       Math.round(b * 255)) >>> 0;
 
-  return toSignedInt32(int32Color);
+  return toUInt32(int32Color);
 }

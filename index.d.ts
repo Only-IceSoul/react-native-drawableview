@@ -2,18 +2,23 @@ import React from "react";
 import { Constructor, NativeMethods, ViewProps } from "react-native";
 
 type Color = number | number[] | string;
-type  NumberProp =  string[] | number[]
-type DrawableAttrs =  {
 
-    borderRadiusTopLeft?: number
-    borderRadiusTopRight?: number
-    borderRadiusBottomLeft?: number
-    borderRadiusBottomRight?: number
-
+interface DrawableViewProps extends ViewProps {
+  
     path?:{
         d:string
-        viewBox:string | NumberProp[] 
-        preserveAspectRatio?:string
+        viewBox:number[] 
+        aspect?: 'meet' | 'slice' | 'none'
+        align?:'xMinYMin'|
+        'xMidYMin' |
+        'xMaxYMin' |
+        'xMinYMid' |
+        'xMidYMid' |
+        'xMaxYMid' |
+        'xMinYMax' |
+        'xMidYMax' |
+        'xMaxYMax' |
+        'none'
     }
     pathScale?:{ x:number,y:number }
     pathRotation?: number
@@ -33,13 +38,7 @@ type DrawableAttrs =  {
     strokeEnd?:number
 
     fillColor?:number | number[] | string
-    backgroundColor?: Color
-
-
-}
-
-interface DrawableViewProps extends ViewProps {
-    attrs?:DrawableAttrs
+    bgColor?: Color
 }
 
 declare class ViewDrawable extends React.Component<DrawableViewProps> {}

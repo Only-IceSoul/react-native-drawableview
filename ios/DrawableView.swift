@@ -19,10 +19,12 @@ class DrawableView: UIView {
     init() {
         super.init(frame: .zero)
         layer.addSublayer(mDrawable)
+        mDrawable.setShape(s: .svgPath)
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.addSublayer(mDrawable)
+        mDrawable.setShape(s: .svgPath)
     }
     
     required init?(coder: NSCoder) {fatalError("init(coder:) has not been implemented")}
@@ -33,74 +35,105 @@ class DrawableView: UIView {
         }
     }
     
-    @objc func setAttrs(_ props: [String:Any]?){
-        if props != nil{
-            let rtl = props!["borderRadiusTopLeft"] as? CGFloat ?? 0
-            let rtr = props!["borderRadiusTopRight"] as? CGFloat ?? 0
-            let rbl = props!["borderRadiusBottomLeft"] as? CGFloat ?? 0
-            let rbr = props!["borderRadiusBottomRight"] as? CGFloat ?? 0
-            
-            let p = props!["path"] as? String
-            let pvb = props!["pathViewBox"] as? [CGFloat] ?? [0,0,0,0]
-            let pvbas = props!["pathViewBoxAspect"] as? Int ?? 0
-            let pvba = props!["pathViewBoxAlign"] as? String ?? "xMidYMid"
-            let psx = props!["pathScaleX"] as? CGFloat ?? 1
-            let psy = props!["pathScaleY"] as? CGFloat ?? 1
-            let pr = props!["pathRotation"] as? CGFloat ?? 0
-            let ptx = props!["pathTranslationX"] as? CGFloat ?? 0
-            let pty = props!["pathTranslationY"] as? CGFloat ?? 0
-            let ptp = props!["pathTranslationIsPercent"] as? Bool ?? false
-            
-            let so = props!["shadowOpacity"] as? Float ?? 0
-            let sr = props!["shadowRadius"] as? CGFloat ?? 1
-            let sox = props!["shadowOffsetX"] as? CGFloat ?? 0
-            let soy = props!["shadowOffsetY"] as? CGFloat ?? 0
-            let sc = props!["shadowColor"] as? Int ?? 0
-            
-            let strokeW = props!["strokeWidth"] as? CGFloat ?? 0
-            let strokeC = props!["strokeColor"] as? Int ?? 0
-            let strokeStart = props!["strokeStart"] as? CGFloat ?? 0
-            let strokeEnd = props!["strokeEnd"] as? CGFloat ?? 1
-            
-            let fc = props!["fillColor"] as? Int ?? 0
-            let bg = props!["backgroundColor"] as? Int ?? 0
-            
-            let viewBoxAspet:ViewBox.AspectRatio = pvbas == 0 ? .meet : (pvbas == 1 ? .slice : .none)
-            
-            
-            if(p != nil){
-                mDrawable.setShape(s: .svgPath)
-                    .setSvgPath(d: p!,viewBox: [pvb[0],pvb[1],pvb[2],pvb[3]],align: pvba,aspect: viewBoxAspet)
-            }else{
-                mDrawable.setShape(s: .none)
+    @objc func setPath(_ p:[String:Any]?){
+        
+            let d = p?["d"] as? String ?? ""
+            let viewBox = p?["viewBox"] as? [CGFloat] ?? [0,0,0,0]
+            let aspect = p?["aspect"] as? String ?? "none"
+            let align = p?["align"] as? String ?? "xMidYMid"
+            var a :ViewBox.AspectRatio = .none
+            switch aspect {
+            case "meet":
+                a = .meet
+                break
+            case "slice":
+                a = .slice
+                break
+            default:
+                a = .none
+                break
             }
-            
-            mDrawable.setRadius(topLeft: rtl, topRight: rtr, bottomLeft: rbl, bottomRight: rbr)
-               
-                .setPathScale(sx: psx, sy: psy)
-                .setPathRotation(degrees: pr)
-                .setShadowRadius(r: sr)
-                .setShadowOffset(p: CGSize(width: sox, height: soy))
-                .setShadowOpacity(o: so)
-                .setShadowColor(c: sc == 0 ? UIColor.black.cgColor : UIColor.parseSignedInt(argb: sc).cgColor)
-                .setStrokeWidth(w: strokeW)
-                .setStrokeColor(color:  strokeC == 0 ? UIColor.black.cgColor : UIColor.parseSignedInt(argb: strokeC).cgColor)
-                .setFillColor(c: fc == 0 ? UIColor.clear.cgColor : UIColor.parseSignedInt(argb: fc).cgColor)
-                .setBackgroundColor(c: bg == 0 ? UIColor.clear.cgColor : UIColor.parseSignedInt(argb: bg).cgColor)
-                
-            
-              mDrawable.setStrokeStart(s: strokeStart)
-            mDrawable.setStrokeEnd(e: strokeEnd)
-            if(ptp){
-                mDrawable.setPathTranslation(percentX: ptx, percentY: pty, plusX: 0, plusY: 0)
-            }else{
-                mDrawable.setPathTranslation(dx: ptx, dy: pty)
-            }
-           
+
+            mDrawable.setSvgPath(d: d,viewBox: viewBox,align: align,aspect: a)
             mDrawable.invalidateSelf()
-        }
-       
+        
     }
+    @objc func setPathRotation(_ r:CGFloat){
+        mDrawable.setPathRotation(degrees: r)
+        mDrawable.invalidateSelf()
+        print("called rotation ",r)
+    }
+    @objc func setPathScale(_ v:[String:Any]?){
+
+            let x = v?["x"] as? CGFloat ?? 1
+            let y = v?["y"] as? CGFloat ?? 1
+            mDrawable.setPathScale(sx: x, sy: y)
+            mDrawable.invalidateSelf()
+        print("called scale ",x,y)
+
+    }
+    @objc func setPathTranslation(_ v:[String:Any]?){
+
+        let x = v?["dx"] as? CGFloat ?? 0
+        let y = v?["dy"] as? CGFloat ?? 0
+        let per = v?["percentageValue"] as? Bool ?? false
+        print("called trans ",x,y,per)
+        if(per){
+            mDrawable.setPathTranslation(percentX: x, percentY: y, plusX: 0, plusY: 0)
+        }else{
+            mDrawable.setPathTranslation(dx: x, dy: y)
+        }
+        mDrawable.invalidateSelf()
+     
+    }
+    
+    @objc func setShadowColor(_ c:CGFloat){
+        mDrawable.setShadowColor(c: c == 0 ? UIColor.black.cgColor : UIColor.parseSignedInt(argb: Int(c)).cgColor)
+        mDrawable.invalidateSelf()
+        
+    }
+    @objc func setShadowOffset(_ v:[String:Any]?){
+        let x = v?["x"] as? CGFloat ?? 0
+        let y = v?["y"] as? CGFloat ?? 0
+        mDrawable.setShadowOffset(p: CGSize(width: x, height: y))
+        mDrawable.invalidateSelf()
+
+    }
+    @objc func setShadowOpacity(_ v:CGFloat){
+        mDrawable.setShadowOpacity(o: Float(v))
+    }
+    @objc func setShadowRadius(_ v:CGFloat){
+        mDrawable.setShadowRadius(r: v)
+        mDrawable.invalidateSelf()
+    }
+    @objc func setStrokeWidth(_ v:CGFloat){
+        mDrawable.setStrokeWidth(w: v)
+        mDrawable.invalidateSelf()
+    }
+    @objc func setStrokeColor(_ v:CGFloat){
+        mDrawable.setStrokeColor(color:  v == 0 ? UIColor.black.cgColor : UIColor.parseSignedInt(argb: Int(v)).cgColor)
+        mDrawable.invalidateSelf()
+    }
+    @objc func setStrokeStart(_ v:CGFloat){
+        mDrawable.setStrokeStart(s: v)
+        mDrawable.invalidateSelf()
+    }
+    @objc func setStrokeEnd(_ v:CGFloat){
+        mDrawable.setStrokeEnd(e: v)
+        mDrawable.invalidateSelf()
+    }
+    @objc func setFillColor(_ v:CGFloat){
+        mDrawable.setFillColor(c:  v == 0 ? UIColor.clear.cgColor : UIColor.parseSignedInt(argb: Int(v)).cgColor)
+        mDrawable.invalidateSelf()
+    }
+    @objc func setBgColor(_ v:CGFloat){
+        mDrawable.setBackgroundColor(c:  v == 0 ? UIColor.clear.cgColor : UIColor.parseSignedInt(argb: Int(v)).cgColor)
+        mDrawable.invalidateSelf()
+    }
+    
+    
+          
+  
     
   
     
