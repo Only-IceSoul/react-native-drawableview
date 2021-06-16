@@ -16,6 +16,7 @@ class DrawableView: UIView {
 
     let mDrawable = JJDrawable()
     
+    
     init() {
         super.init(frame: .zero)
         layer.addSublayer(mDrawable)
@@ -40,7 +41,7 @@ class DrawableView: UIView {
             let d = p?["d"] as? String ?? ""
             let viewBox = p?["viewBox"] as? [CGFloat] ?? [0,0,0,0]
             let aspect = p?["aspect"] as? String ?? "none"
-            let align = p?["align"] as? String ?? "xMidYMid"
+            let align = p?["align"] as? String ?? "none"
             var a :ViewBox.AspectRatio = .none
             switch aspect {
             case "meet":
@@ -58,26 +59,23 @@ class DrawableView: UIView {
             mDrawable.invalidateSelf()
         
     }
-    @objc func setPathRotation(_ r:CGFloat){
-        mDrawable.setPathRotation(degrees: r)
+    @objc func setPathRotation(_ r:NSNumber?){
+        let rotation = CGFloat(truncating: r ?? 0)
+        mDrawable.setPathRotation(degrees: rotation)
         mDrawable.invalidateSelf()
-        print("called rotation ",r)
     }
     @objc func setPathScale(_ v:[String:Any]?){
-
             let x = v?["x"] as? CGFloat ?? 1
             let y = v?["y"] as? CGFloat ?? 1
             mDrawable.setPathScale(sx: x, sy: y)
             mDrawable.invalidateSelf()
-        print("called scale ",x,y)
-
     }
     @objc func setPathTranslation(_ v:[String:Any]?){
 
         let x = v?["dx"] as? CGFloat ?? 0
         let y = v?["dy"] as? CGFloat ?? 0
         let per = v?["percentageValue"] as? Bool ?? false
-        print("called trans ",x,y,per)
+      
         if(per){
             mDrawable.setPathTranslation(percentX: x, percentY: y, plusX: 0, plusY: 0)
         }else{
@@ -87,10 +85,10 @@ class DrawableView: UIView {
      
     }
     
-    @objc func setShadowColor(_ c:CGFloat){
-        mDrawable.setShadowColor(c: c == 0 ? UIColor.black.cgColor : UIColor.parseSignedInt(argb: Int(c)).cgColor)
+    @objc func setShadowColor(_ c:NSNumber?){
+        let color = Int(truncating: c ?? 0)
+        mDrawable.setShadowColor(c: c == nil ? UIColor.black.cgColor : UIColor.parseInt(argb: color).cgColor)
         mDrawable.invalidateSelf()
-        
     }
     @objc func setShadowOffset(_ v:[String:Any]?){
         let x = v?["x"] as? CGFloat ?? 0
@@ -99,35 +97,43 @@ class DrawableView: UIView {
         mDrawable.invalidateSelf()
 
     }
-    @objc func setShadowOpacity(_ v:CGFloat){
-        mDrawable.setShadowOpacity(o: Float(v))
+    @objc func setShadowOpacity(_ v:NSNumber?){
+        let op = Float(truncating: v ?? 0)
+        mDrawable.setShadowOpacity(o: op)
     }
-    @objc func setShadowRadius(_ v:CGFloat){
-        mDrawable.setShadowRadius(r: v)
+    @objc func setShadowRadius(_ v:NSNumber?){
+        let rad = CGFloat(truncating: v ?? 1)
+        mDrawable.setShadowRadius(r: rad)
         mDrawable.invalidateSelf()
     }
-    @objc func setStrokeWidth(_ v:CGFloat){
-        mDrawable.setStrokeWidth(w: v)
+    @objc func setStrokeWidth(_ v:NSNumber?){
+        let sw = CGFloat(truncating: v ?? 0)
+        mDrawable.setStrokeWidth(w: sw)
         mDrawable.invalidateSelf()
     }
-    @objc func setStrokeColor(_ v:CGFloat){
-        mDrawable.setStrokeColor(color:  v == 0 ? UIColor.black.cgColor : UIColor.parseSignedInt(argb: Int(v)).cgColor)
+    @objc func setStrokeColor(_ v:NSNumber?){
+        let color = Int(truncating: v ?? 0)
+        mDrawable.setStrokeColor(color:  v == nil ? UIColor.black.cgColor : UIColor.parseInt(argb: color).cgColor)
         mDrawable.invalidateSelf()
     }
-    @objc func setStrokeStart(_ v:CGFloat){
-        mDrawable.setStrokeStart(s: v)
+    @objc func setStrokeStart(_ v:NSNumber?){
+        let sv = CGFloat(truncating: v ?? 0)
+        mDrawable.setStrokeStart(s: sv)
         mDrawable.invalidateSelf()
     }
-    @objc func setStrokeEnd(_ v:CGFloat){
-        mDrawable.setStrokeEnd(e: v)
+    @objc func setStrokeEnd(_ v:NSNumber?){
+        let ev = CGFloat(truncating: v ?? 1)
+        mDrawable.setStrokeEnd(e: ev)
         mDrawable.invalidateSelf()
     }
-    @objc func setFillColor(_ v:CGFloat){
-        mDrawable.setFillColor(c:  v == 0 ? UIColor.clear.cgColor : UIColor.parseSignedInt(argb: Int(v)).cgColor)
+    @objc func setFillColor(_ v:NSNumber?){
+        let color = Int(truncating: v ?? 0)
+        mDrawable.setFillColor(c:  v == nil ? UIColor.clear.cgColor : UIColor.parseInt(argb: color).cgColor)
         mDrawable.invalidateSelf()
     }
-    @objc func setBgColor(_ v:CGFloat){
-        mDrawable.setBackgroundColor(c:  v == 0 ? UIColor.clear.cgColor : UIColor.parseSignedInt(argb: Int(v)).cgColor)
+    @objc func setBgColor(_ v:NSNumber?){
+        let color = Int(truncating: v ?? 0)
+        mDrawable.setBackgroundColor(c:  v == nil ? UIColor.clear.cgColor : UIColor.parseInt(argb: color).cgColor)
         mDrawable.invalidateSelf()
     }
     

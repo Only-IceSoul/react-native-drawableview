@@ -1,6 +1,6 @@
 # DrawableView
 
-Draw svg paths with shadows and rects
+Draw svg paths with shadows
 
 android: api 21+   
 ios : 10.0+   
