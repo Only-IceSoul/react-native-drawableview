@@ -15,6 +15,7 @@ class DrawableView(context: Context): ViewGroup(context) {
     init{
         background = mDrawable
         clipChildren = false
+        mDrawable.setShape(JJDrawable.SVG_PATH)
     }
 
     fun getDrawable(): JJDrawable{

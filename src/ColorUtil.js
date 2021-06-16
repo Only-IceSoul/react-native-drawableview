@@ -419,17 +419,18 @@ const toUInt32 = (x) => x | 0x0;
 // color = number | number[] | string;
 // Returns 0xaarrggbb or null
 export default function extractColor(color) {
+
   if (typeof color === 'number') {
     if (color >>> 0 === color && color >= 0 && color <= 0xffffffff) {
       return toUInt32(color);
     }
-    return 0;
+    return null;
   }
 
   const parsedColor =
     typeof color === 'string' ? colorFromString(color) : color;
   if (!Array.isArray(parsedColor)) {
-    return 0;
+    return null;
   }
 
 

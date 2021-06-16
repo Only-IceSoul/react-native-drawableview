@@ -57,6 +57,10 @@ const Drawable = (props) => {
 
     const path = useMemo(()=>{
         let vb = props.path.viewBox
+
+        if (props.path.d === undefined){
+            console.warn('Invalid `d` prop:' + props.path.d)
+        }
         if (vb.length !== 4 || vb.some(isNaN)) {
             console.warn('Invalid `viewBox` prop:' + viewBox)
             return{
@@ -96,18 +100,18 @@ const sc = useMemo(()=>{
             ref={props.ref}  
             style={othersStyle} 
                 path={path}
-                pathScale={others.pathScale || { x:1,y:1}}
-                pathRotation={others.pathRotation || 0}
+                pathScale={others.pathScale}
+                pathRotation={others.pathRotation}
                 pathTranslation={others.pathTranslation}
                 shadowColor={sc}
                 shadowOffset={others.shadowOffset}
-                shadowOpacity={others.shadowOpacity || 0}
-                shadowRadius={others.shadowRadius || 1}
+                shadowOpacity={others.shadowOpacity}
+                shadowRadius={others.shadowRadius}
             
-                strokeWidth={others.strokeWidth || 0}
+                strokeWidth={others.strokeWidth}
                 strokeColor={strokeColor}
-                strokeStart={others.strokeStart || 0}
-                strokeEnd={others.strokeEnd || 1}
+                strokeStart={others.strokeStart}
+                strokeEnd={others.strokeEnd}
             
                 fillColor={fillColor} 
                 bgColor={bgColor}

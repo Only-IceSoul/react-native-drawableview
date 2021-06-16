@@ -22,96 +22,123 @@ class DrawableViewManager : ViewGroupManager<DrawableView>() {
         return v
     }
 
-    @ReactProp(name = "attrs")
-    fun setAttrs(view: DrawableView, props:ReadableMap?)  {
-
-        props?.let {
-            val rtl = try { props.getDouble("borderRadiusTopLeft") }catch(e: Exception) {  0.0 }.toFloat()  //
-            val rtr = try { props.getDouble("borderRadiusTopRight") }catch(e: Exception) {  0.0 }.toFloat() //
-            val rbl = try { props.getDouble("borderRadiusBottomLeft") }catch(e: Exception) {  0.0 }.toFloat() //
-            val rbr = try { props.getDouble("borderRadiusBottomRight") }catch(e: Exception) {  0.0 }.toFloat() //
-
-            val path = try { props.getString("path") }catch(e: Exception) {  null } //
-            val pathVb:FloatArray = try {
-                if(props.hasKey("pathViewBox")){
-                    val ra  = props.getArray("pathViewBox")
-
-                    val x = try { ra!!.getDouble(0) } catch (e:Exception) { 0 }.toFloat()
-                    val y = try { ra!!.getDouble(1) } catch (e:Exception) { 0 }.toFloat()
-                    val w = try { ra!!.getDouble(2) } catch (e:Exception) { 0 }.toFloat()
-                    val h = try { ra!!.getDouble(3) } catch (e:Exception) { 0 }.toFloat()
-
-                    floatArrayOf(x,y,w,h)
-                }else{
-                    floatArrayOf(0f,0f,0f,0f)
-                }
-
-            }catch(e: Exception) {  floatArrayOf(0f,0f,0f,0f) }
-            val pathAspect = try { props.getInt("pathViewBoxAspect") }catch(e: Exception) {  0 } //
-            val pathAlign = try { props.getString("pathViewBoxAlign")!! }catch(e: Exception) {  "xMidYMid" } //
-            val pathScaleX = try { props.getDouble("pathScaleX") }catch(e: Exception) {  1 }.toFloat() //
-            val pathScaleY = try { props.getDouble("pathScaleY") }catch(e: Exception) {  1 }.toFloat() //
-            val pathRotation = try { props.getDouble("pathRotation") }catch(e: Exception) {  0 }.toFloat() //
-            val pathTx = try { props.getDouble("pathTranslationX") }catch(e: Exception) {  0 }.toFloat() //
-            val pathTy = try { props.getDouble("pathTranslationY") }catch(e: Exception) {  0 }.toFloat() //
-            val pathIsTransPerValue = try { props.getBoolean("pathTranslationIsPercent") }catch(e: Exception) { false } //
-
-            val shadowOpacity = try { props.getDouble("shadowOpacity") }catch(e: Exception) {  0 }.toFloat() //
-            val shadowRadius = try { props.getDouble("shadowRadius") }catch(e: Exception) {  1 }.toFloat() //
-            val shadowOffsetX = try { props.getDouble("shadowOffsetX") }catch(e: Exception) {  0 }.toFloat() //
-            val shadowOffsetY = try { props.getDouble("shadowOffsetY") }catch(e: Exception) {  0 }.toFloat() //
-            val shadowColor = try { props.getInt("shadowColor") }catch(e: Exception) {  Color.BLACK } //
-
-            val strokeWidth = try { props.getDouble("strokeWidth") }catch(e: Exception) {   0 }.toFloat() //
-            val strokeColor = try { props.getInt("strokeColor") }catch(e: Exception) {   Color.BLACK } //
-            val strokeStart = try { props.getDouble("strokeStart") }catch(e: Exception) {   0 }.toFloat() //
-            val strokeEnd = try { props.getDouble("strokeEnd") }catch(e: Exception) { 0 }.toFloat() //
-
-            val fillColor = try { props.getInt("fillColor") }catch(e: Exception) {   Color.TRANSPARENT } //
-            val bg = try { props.getInt("backgroundColor") }catch(e: Exception) {   Color.TRANSPARENT } //
+    @ReactProp(name = "path")
+    fun setPath(view: DrawableView, p:ReadableMap?){
 
 
-            val mDrawable = view.getDrawable()
+        val d = try { p!!.getString("d")!! }catch(e: Exception) { "" }
+        val viewBox = try { p!!.getArray("viewBox") }catch(e: Exception) { null }
+        val aspect = try { p!!.getString("aspect")!! }catch(e: Exception) { "none" }
+        val align = try { p!!.getString("align")!! }catch(e: Exception) { "none" }
 
-            if(path != null){
-                mDrawable.setShape(JJDrawable.SVG_PATH)
-                        .setSvgPath(path,view.resources.displayMetrics.density,pathVb,pathAlign,pathAspect)
-            }else{
-                mDrawable.setShape(JJDrawable.NONE)
-            }
-
-            mDrawable.setRadius(toDip(rtl,view),toDip(rtr,view),toDip(rbl,view),toDip(rbr,view))
-
-                    .setPathScale(pathScaleX,pathScaleY)
-                    .setPathRotation(pathRotation)
-
-            if(pathIsTransPerValue){
-                mDrawable.setPathTranslation(pathTx,pathTy,0f,0f)
-            }else{
-                mDrawable.setPathTranslation(toDip(pathTx,view),toDip(pathTy,view))
-            }
-
-            mDrawable.setShadowRadius(toDip(shadowRadius,view))
-                    .setShadowOffset(toDip(shadowOffsetX,view),toDip(shadowOffsetY,view))
-                    .setShadowOpacity(shadowOpacity)
-                    .setShadowColor(shadowColor)
-                    .setStrokeWidth(toDip(strokeWidth,view))
-                    .setStrokeColor(strokeColor)
-                    .setFillColor(fillColor)
-                    .setBackgroundColor(bg)
-                    .setStrokeStart(strokeStart)
-                    .setStrokeEnd(strokeEnd)
-
-
-
-
-            mDrawable.invalidateSelf()
+        val a  = when(aspect) {
+            "meet" ->  JJDrawable.VIEW_BOX_MEET
+            "slice" -> JJDrawable.VIEW_BOX_SLICE
+            else -> JJDrawable.VIEW_BOX_NONE
         }
-      
+
+        val v = floatArrayOf(0f,0f,0f,0f)
+        viewBox?.let {
+            v[0] = it.getDouble(0).toFloat()
+            v[1] = it.getDouble(1).toFloat()
+            v[2] = it.getDouble(2).toFloat()
+            v[3] = it.getDouble(3).toFloat()
+        }
+        val mDrawable = view.getDrawable()
+        mDrawable.setSvgPath(d,view.resources.displayMetrics.density, v,align,a)
+        mDrawable.invalidateSelf()
 
 
+    }
+    @ReactProp(name = "pathRotation",defaultFloat = 0f)
+    fun setPathRotation(view: DrawableView, r:Float){
+        val mDrawable = view.getDrawable()
+        mDrawable.setPathRotation(r)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "pathScale")
+    fun setPathScale(view: DrawableView, v:ReadableMap?){
+        val mDrawable = view.getDrawable()
+        val x = try { v!!.getDouble("x") }catch(e: Exception) { 1.0 }.toFloat()
+        val y = try { v!!.getDouble("y") }catch(e: Exception) { 1.0 }.toFloat()
+        mDrawable.setPathScale(x,y)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "pathTranslation")
+    fun setPathTranslation(view: DrawableView, v:ReadableMap?){
+        val dx = try { v!!.getDouble("dx") }catch(e: Exception) { 0.0 }.toFloat()
+        val dy = try { v!!.getDouble("dy") }catch(e: Exception) { 0.0 }.toFloat()
+        val per = try { v!!.getBoolean("percentageValue") }catch(e: Exception) { false }
+        val mDrawable = view.getDrawable()
+        if(per){
+            mDrawable.setPathTranslation(dx,dy,0f,0f)
+        }else{
+            mDrawable.setPathTranslation(toDip(dx,view),toDip(dy,view))
+        }
+        mDrawable.invalidateSelf()
+    }
 
-
+    @ReactProp(name = "shadowColor",defaultInt = Color.BLACK)
+    override fun setShadowColor(view: DrawableView, v:Int){
+        val mDrawable = view.getDrawable()
+        mDrawable.setShadowColor(v)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "shadowOffset")
+    fun setShadowOffset(view: DrawableView, v:ReadableMap?){
+        val x = try { v!!.getDouble("x") }catch(e: Exception) { 0.0 }.toFloat()
+        val y = try { v!!.getDouble("y") }catch(e: Exception) { 0.0 }.toFloat()
+        val mDrawable = view.getDrawable()
+        mDrawable.setShadowOffset(toDip(x,view),toDip(y,view))
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "shadowOpacity",defaultFloat = 0f)
+    fun setShadowOpacity(view: DrawableView,v:Float){
+        val mDrawable = view.getDrawable()
+        mDrawable.setShadowOpacity(v)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "shadowRadius",defaultFloat = 1f)
+    fun setShadowRadius(view: DrawableView,v:Float){
+        val mDrawable = view.getDrawable()
+        mDrawable.setShadowRadius(toDip(v,view))
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "strokeWidth",defaultFloat = 0f)
+    fun setStrokeWidth(view: DrawableView,v:Float){
+        val mDrawable = view.getDrawable()
+        mDrawable.setStrokeWidth(toDip(v,view))
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "strokeColor",defaultInt = Color.BLACK)
+    fun setStrokeColor(view: DrawableView,v:Int){
+        val mDrawable = view.getDrawable()
+        mDrawable.setStrokeColor(v)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "strokeStart",defaultFloat = 0f)
+    fun setStrokeStart(view: DrawableView,v:Float){
+        val mDrawable = view.getDrawable()
+        mDrawable.setStrokeStart(v)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "strokeEnd",defaultFloat = 1f)
+    fun setStrokeEnd(view: DrawableView,v:Float){
+        val mDrawable = view.getDrawable()
+        mDrawable.setStrokeEnd(v)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "fillColor", defaultInt = Color.TRANSPARENT)
+    fun setFillColor(view: DrawableView,v:Int){
+        val mDrawable = view.getDrawable()
+        mDrawable.setFillColor(v)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "bgColor",defaultInt = Color.TRANSPARENT)
+    fun setBgColor(view: DrawableView,v:Int){
+        val mDrawable = view.getDrawable()
+        mDrawable.setBackgroundColor(v)
+        mDrawable.invalidateSelf()
     }
 
 
