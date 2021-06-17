@@ -100,6 +100,7 @@ class DrawableView: UIView {
     @objc func setShadowOpacity(_ v:NSNumber?){
         let op = Float(truncating: v ?? 0)
         mDrawable.setShadowOpacity(o: op)
+        mDrawable.invalidateSelf()
     }
     @objc func setShadowRadius(_ v:NSNumber?){
         let rad = CGFloat(truncating: v ?? 1)

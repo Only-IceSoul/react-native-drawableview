@@ -1,4 +1,4 @@
-
+import { Platform } from "react-native";
 export const colors = {
   aliceblue: [240, 248, 255],
   antiquewhite: [250, 235, 215],
@@ -414,8 +414,10 @@ function colorFromString(string) {
 }
 
 
-const toUInt32 = (x) => x | 0x0;
+const identity = (x) => x
 
+const toSignedInt32 = (x) => x | 0x0;
+export const integerColor = Platform.OS === 'android' ? toSignedInt32 : identity
 // color = number | number[] | string;
 // Returns 0xaarrggbb or null
 export default function extractColor(color) {
@@ -445,5 +447,5 @@ export default function extractColor(color) {
       (Math.round(g * 255) << 8) |
       Math.round(b * 255)) >>> 0;
 
-  return toUInt32(int32Color);
+  return integerColor(int32Color);
 }
