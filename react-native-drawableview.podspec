@@ -25,6 +25,6 @@ Pod::Spec.new do |s|
 
   s.dependency "React"
   # ...
-  s.dependency "jjutils", '~> 1.4.3'
+  s.dependency "jjutils", '~> 1.4.5'
 end
 

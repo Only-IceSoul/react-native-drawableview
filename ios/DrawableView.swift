@@ -21,11 +21,13 @@ class DrawableView: UIView {
         super.init(frame: .zero)
         layer.addSublayer(mDrawable)
         mDrawable.setShape(s: .svgPath)
+        mDrawable.setStrokeMiter(4)
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.addSublayer(mDrawable)
         mDrawable.setShape(s: .svgPath)
+        mDrawable.setStrokeMiter(4)
     }
     
     required init?(coder: NSCoder) {fatalError("init(coder:) has not been implemented")}
@@ -127,6 +129,51 @@ class DrawableView: UIView {
         mDrawable.setStrokeEnd(e: ev)
         mDrawable.invalidateSelf()
     }
+    @objc func setStrokeCap(_ v:String?){
+        var cap = DrawableLineCap.butt
+        switch(v ?? "butt"){
+            case "round":
+                cap = DrawableLineCap.round
+                break
+            case "square" :
+                cap = DrawableLineCap.square
+                break
+            default:
+                cap = DrawableLineCap.butt
+                break
+         }
+         mDrawable.setStrokeCap(cap)
+         mDrawable.invalidateSelf()
+     }
+     
+    @objc func setStrokeJoin(_ v:String?){
+        var join = DrawableLineJoin.miter
+        switch(v ?? "miter"){
+            case "round":
+                join = DrawableLineJoin.round
+                break
+            case "bevel" :
+                join = DrawableLineJoin.bevel
+                break
+            default:
+                join = DrawableLineJoin.miter
+                break
+         }
+         mDrawable.setStrokeJoin(join)
+         mDrawable.invalidateSelf()
+     }
+     
+    @objc func setStrokeMiter(_ v:NSNumber?){
+        let value = CGFloat(truncating: v ?? 4)
+        mDrawable.setStrokeMiter(value)
+         mDrawable.invalidateSelf()
+     }
+    @objc func setPathInset(_ v:[String:Any]?){
+        let x = v?["x"] as? CGFloat ?? 0
+        let y = v?["y"] as? CGFloat ?? 0
+        mDrawable.setInset(dx: x,dy: y)
+         mDrawable.invalidateSelf()
+     }
     @objc func setFillColor(_ v:NSNumber?){
         let color = Int(truncating: v ?? 0)
         mDrawable.setFillColor(c:  v == nil ? UIColor.clear.cgColor : UIColor.parseInt(argb: color).cgColor)
