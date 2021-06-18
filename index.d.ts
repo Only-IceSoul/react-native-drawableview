@@ -27,6 +27,8 @@ interface DrawableViewProps extends ViewProps {
         dy:number,
         percentageValue:boolean
     }
+    pathInset?:{ x:number,y:number }
+    
     shadowColor?: Color
     shadowOffset?: {x: number,y:number}
     shadowOpacity?: number
@@ -36,6 +38,9 @@ interface DrawableViewProps extends ViewProps {
     strokeColor?: Color
     strokeStart?:number
     strokeEnd?:number
+    strokeCap?:'butt' | 'round' | 'square'
+    strokeJoin?: 'bevel' | 'miter' | 'round'
+    strokeMiter?:number
 
     fillColor?:number | number[] | string
     bgColor?: Color

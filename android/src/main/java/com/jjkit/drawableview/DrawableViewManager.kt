@@ -2,6 +2,7 @@ package com.jjkit.drawableview
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Paint
 import android.util.TypedValue
 import android.view.View
 import com.facebook.react.bridge.ReadableMap
@@ -126,6 +127,42 @@ class DrawableViewManager : ViewGroupManager<DrawableView>() {
     fun setStrokeEnd(view: DrawableView,v:Float){
         val mDrawable = view.getDrawable()
         mDrawable.setStrokeEnd(v)
+        mDrawable.invalidateSelf()
+    }
+     @ReactProp(name = "strokeCap")
+    fun setStrokeCap(view: DrawableView,v:String?){
+        val mDrawable = view.getDrawable()
+        val cap = when(v ?: "butt"){
+                "round" -> Paint.Cap.ROUND
+                "square" -> Paint.Cap.SQUARE
+                 else -> Paint.Cap.BUTT
+        }
+        mDrawable.setStrokeCap(cap)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "strokeJoin")
+    fun setStrokeJoin(view: DrawableView,v:String?){
+        val mDrawable = view.getDrawable()
+        val join = when(v ?: "miter"){
+            "round" -> Paint.Join.ROUND
+            "bevel" -> Paint.Join.BEVEL
+            else -> Paint.Join.MITER
+        }
+        mDrawable.setStrokeJoin(join)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "strokeMiter",defaultFloat = 4f)
+    fun setStrokeMiter(view: DrawableView,v:Float){
+        val mDrawable = view.getDrawable()
+        mDrawable.setStrokeMiter(v)
+        mDrawable.invalidateSelf()
+    }
+    @ReactProp(name = "pathInset")
+    fun setPathInset(view: DrawableView,v:ReadableMap?){
+        val mDrawable = view.getDrawable()
+        val x = try { v!!.getDouble("x") }catch(e: Exception) { 0.0 }.toFloat()
+        val y = try { v!!.getDouble("y") }catch(e: Exception) { 0.0 }.toFloat()
+        mDrawable.setInset(x,y)
         mDrawable.invalidateSelf()
     }
     @ReactProp(name = "fillColor", defaultInt = Color.TRANSPARENT)

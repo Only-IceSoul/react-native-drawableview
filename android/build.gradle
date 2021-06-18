@@ -85,7 +85,7 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation 'com.github.Only-IceSoul:JJUtils:1.8.6'
+    implementation 'com.github.Only-IceSoul:JJUtils:1.8.8'
     implementation 'androidx.core:core-ktx:1.5.0'
 }
 

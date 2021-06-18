@@ -103,6 +103,8 @@ const sc = useMemo(()=>{
                 pathScale={others.pathScale}
                 pathRotation={others.pathRotation}
                 pathTranslation={others.pathTranslation}
+                pathInset={others.pathInset}
+                
                 shadowColor={sc}
                 shadowOffset={others.shadowOffset}
                 shadowOpacity={others.shadowOpacity}
@@ -112,6 +114,9 @@ const sc = useMemo(()=>{
                 strokeColor={strokeColor}
                 strokeStart={others.strokeStart}
                 strokeEnd={others.strokeEnd}
+                strokeCap={others.strokeCap}
+                strokeJoin={others.strokeJoin}
+                strokeMiter={others.strokeMiter}
             
                 fillColor={fillColor} 
                 bgColor={bgColor}
