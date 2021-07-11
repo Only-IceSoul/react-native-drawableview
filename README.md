@@ -51,6 +51,14 @@ buildscript {
 
 ```
 
+## IOS
+
+**Add Swift**
+
+open the xcode project.  
+add a .swift file.  
+Skip the bridge.  
+
 # Usage
 ```javascript
 import Drawableview from 'react-native-drawableview';
