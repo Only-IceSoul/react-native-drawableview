@@ -15,5 +15,7 @@ class Drawable: RCTViewManager {
     override func view() -> UIView! {
        return DrawableView()
      }
-   
+   override class func requiresMainQueueSetup() -> Bool {
+        return false
+    }
 }
