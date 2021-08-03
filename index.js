@@ -1,7 +1,8 @@
 // main index.js
 
 
-import DrawableView from './src/DrawableView'
-
-
-export default DrawableView;
+import { Platform,requireNativeComponent } from 'react-native';
+import DrawableViewWeb from './src/DrawableViewWeb'
+import ExtractColor from './src/Color'
+export const DrawableView = Platform.OS == 'android' || Platform.OS == 'ios' ? requireNativeComponent('Drawable',null) : DrawableViewWeb
+export const Color = ExtractColor;

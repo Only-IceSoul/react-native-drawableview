@@ -423,29 +423,44 @@ export const integerColor = Platform.OS === 'android' ? toSignedInt32 : identity
 export default function extractColor(color) {
 
   if (typeof color === 'number') {
-    if (color >>> 0 === color && color >= 0 && color <= 0xffffffff) {
-      return toUInt32(color);
+    const ca = (color >> 24) & 0xff; 
+    const cr = (color >> 16) & 0xff;
+    const cg = (color >>  8) & 0xff;
+    const cb = (color      ) & 0xff;
+    if(Platform.OS === 'android' || Platform.OS === 'ios'){
+      const intColor = ( (ca << 24) | (cr << 16) | (cg << 8) | cb ) >>> 0
+
+        return integerColor(intColor);
+    }else{
+     
+       return `rgba(${cr}, ${cg}, ${cb}, ${ca/255})`
     }
-    return null;
+  
   }
 
-  const parsedColor =
-    typeof color === 'string' ? colorFromString(color) : color;
-  if (!Array.isArray(parsedColor)) {
-    return null;
+ 
+      const parsedColor =
+        typeof color === 'string' ? colorFromString(color) : color;
+      if (!Array.isArray(parsedColor)) {
+        return null;
+      }
+
+      const r = parsedColor[0];
+      const g = parsedColor[1];
+      const b = parsedColor[2];
+      const a = parsedColor[3];
+
+
+  if( Platform.OS === 'android'  || Platform.OS === 'ios'){
+        const int32Color =
+        ((a === undefined ? 0xff000000 : Math.round(a * 255) << 24) |
+          (Math.round(r * 255) << 16) |
+          (Math.round(g * 255) << 8) |
+          Math.round(b * 255)) >>> 0;
+
+        return integerColor(int32Color);
   }
 
+  return `rgba(${r * 255}, ${g*255}, ${b*255}, ${a})`
 
-  const r = parsedColor[0];
-  const g = parsedColor[1];
-  const b = parsedColor[2];
-  const a = parsedColor[3];
-
-  const int32Color =
-    ((a === undefined ? 0xff000000 : Math.round(a * 255) << 24) |
-      (Math.round(r * 255) << 16) |
-      (Math.round(g * 255) << 8) |
-      Math.round(b * 255)) >>> 0;
-
-  return integerColor(int32Color);
 }

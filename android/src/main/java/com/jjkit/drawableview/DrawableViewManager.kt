@@ -80,7 +80,7 @@ class DrawableViewManager : ViewGroupManager<DrawableView>() {
     }
 
     @ReactProp(name = "shadowColor",defaultInt = Color.BLACK)
-    override fun setShadowColor(view: DrawableView, v:Int){
+    fun setShadowColor(view: DrawableView, v:Int){
         val mDrawable = view.getDrawable()
         mDrawable.setShadowColor(v)
         mDrawable.invalidateSelf()
@@ -162,7 +162,7 @@ class DrawableViewManager : ViewGroupManager<DrawableView>() {
         val mDrawable = view.getDrawable()
         val x = try { v!!.getDouble("x") }catch(e: Exception) { 0.0 }.toFloat()
         val y = try { v!!.getDouble("y") }catch(e: Exception) { 0.0 }.toFloat()
-        mDrawable.setInset(x,y)
+        mDrawable.setInset(toDip(x,view),toDip(y,view))
         mDrawable.invalidateSelf()
     }
     @ReactProp(name = "fillColor", defaultInt = Color.TRANSPARENT)

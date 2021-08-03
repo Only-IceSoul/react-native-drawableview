@@ -12,10 +12,10 @@
 
 // These defaults should reflect the SDK versions used by
 // the minimum React Native version supported.
-def DEFAULT_COMPILE_SDK_VERSION = 28
-def DEFAULT_BUILD_TOOLS_VERSION = '29.0.2'
+def DEFAULT_COMPILE_SDK_VERSION = 30
+def DEFAULT_BUILD_TOOLS_VERSION = '29.0.3'
 def DEFAULT_MIN_SDK_VERSION = 21
-def DEFAULT_TARGET_SDK_VERSION = 28
+def DEFAULT_TARGET_SDK_VERSION = 30
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -32,9 +32,10 @@ buildscript {
     if (project == rootProject) {
         repositories {
             google()
+            mavenCentral()
             jcenter()
         }
-        ext.kotlin_version = '1.4.32'
+        ext.kotlin_version = '1.5.21'
         dependencies {
             // This should reflect the Gradle plugin version used by
             // the minimum React Native version supported.
@@ -85,8 +86,8 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation 'com.github.Only-IceSoul:JJUtils:1.8.8'
-    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'com.github.Only-IceSoul:JJUtils:1.9.3'
+    implementation 'androidx.core:core-ktx:1.6.0'
 }
 
 def configureReactNativePom(def pom) {
