@@ -84,10 +84,13 @@ add a .swift file
 
 # Usage
 ```javascript
-import Drawableview from 'react-native-drawableview';
+import {Drawableview , Color} from 'react-native-drawableview';
 
 // TODO: What to do with the module?
-   <Drawableview {...props} />
+
+   var colorRed = Color('red') //Color('rgba(255,0,0,1)'), #FF0000 .....
+
+   <Drawableview {...props} shadowColor={colorRed} />
 
 ```
 
