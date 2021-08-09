@@ -12,18 +12,15 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 
-import org.jetbrains.annotations.NotNull;
 
 class DrawableViewManager extends ViewGroupManager<DrawableView> {
 
 
-    @NotNull
     @Override
     public String getName() {
         return "Drawable";
     }
 
-    @NotNull
     @Override
     protected DrawableView createViewInstance(@NonNull ThemedReactContext reactContext) {
         return new DrawableView(reactContext);
