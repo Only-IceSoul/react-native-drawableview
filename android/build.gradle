@@ -32,19 +32,16 @@ buildscript {
     if (project == rootProject) {
         repositories {
             google()
-            mavenCentral()
-            jcenter()
         }
-        ext.kotlin_version = '1.5.21'
         dependencies {
             // This should reflect the Gradle plugin version used by
             // the minimum React Native version supported.
             classpath 'com.android.tools.build:gradle:4.1.3'
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
         }
     }
 }
-apply plugin: 'kotlin-android'
+
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
     buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
@@ -80,14 +77,13 @@ repositories {
     }
     maven { url 'https://jitpack.io' }
     google()
-    jcenter()
+
 }
 
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation 'com.github.Only-IceSoul:JJUtils:1.9.3'
-    implementation 'androidx.core:core-ktx:1.6.0'
+
 }
 
 def configureReactNativePom(def pom) {

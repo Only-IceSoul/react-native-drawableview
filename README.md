@@ -20,54 +20,19 @@ or
     
 ## Android
 
-**Add Kotlin**
-
-/app/build.gradle 
-
-```gradle
-apply plugin: 'kotlin-android' 
-
-android {
-
-   dependencies {
-     // From node_modules
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  
-    }
-}
-
-```
-
-/build.gradle
-
-```gradle
-buildscript {
-        repositories {
-            ...
-            mavenCentral()
-            jcenter()
-        }
-        ext.kotlin_version = '1.5.21'  //last version
-        dependencies {
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        }
-    }
-}
-
-```
-
 RN 0.64:
 
 if you need it, add it
 
-/nodemodules/react-native-drawableview/android/../DrawableViewManager.kt
+/nodemodules/react-native-drawableview/android/../DrawableViewManager.java
 
 ```
-  fun setShadowColor
+  void setShadowColor
   
   to
-
-  override fun setShadowColor
+    
+  @override
+   void setShadowColor
 ```
 
 
