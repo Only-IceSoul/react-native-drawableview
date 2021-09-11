@@ -18,29 +18,15 @@ or
 
 `$ yarn add react-native-drawableview `
     
-## Android
-
-RN 0.64:
-
-if you need it, add it
-
-/nodemodules/react-native-drawableview/android/../DrawableViewManager.java
-
-```
-  void setShadowColor
-  
-  to
-    
-  @override
-   void setShadowColor
-```
 
 
 ## IOS
 
-**Add Swift**
+cd ios
 
-(If you are using expo sdk >=42 you don't need to do this)
+pod install
+
+**Add Swift**
 
 /ios/name_project
 
@@ -81,5 +67,3 @@ import {Drawableview , Color} from 'react-native-drawableview';
 | strokeJoin | line join | string | 'miter' |
 | strokeMiter | control the behavior of miter | Number | 4 |
 | fill | set the fill color  | Color | 'transparent' |
-| bgColor | set the bg | Color | 'transparent' |
-

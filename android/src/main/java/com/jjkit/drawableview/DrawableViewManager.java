@@ -136,24 +136,12 @@ class DrawableViewManager extends ViewGroupManager<DrawableView> {
         view.getDrawable().setStrokeMiter(v);
         view.getDrawable().invalidateSelf();
     }
-    @ReactProp(name = "pathInset")
-    public void setPathInset(DrawableView view,ReadableMap v){
-        float x = (float) ModUtil.getDouble(v,"x",0.0);
-        float y = (float) ModUtil.getDouble(v,"y",0.0);
-        view.getDrawable().setInset(toDip(x,view),toDip(y,view));
-        view.getDrawable().invalidateSelf();
-    }
     @ReactProp(name = "fill", defaultInt = Color.TRANSPARENT)
     public void setFill(DrawableView view ,int v){
         view.getDrawable().setFillColor(v);
         view.getDrawable().invalidateSelf();
     }
-    @ReactProp(name = "bgColor",defaultInt = Color.TRANSPARENT)
-    public void setBgColor(DrawableView view,int v){
-        view.getDrawable().setBackgroundColor(v);
-        view.getDrawable().invalidateSelf();
-    }
-
+ 
     private float toDip(float num, DrawableView view){
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,num,view.getResources().getDisplayMetrics());
     }
