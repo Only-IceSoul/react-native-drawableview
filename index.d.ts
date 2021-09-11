@@ -27,7 +27,7 @@ interface DrawableViewProps extends ViewProps {
         dy:number,
         percentageValue:boolean
     }
-    pathInset?:{ x:number,y:number }
+    
     
     shadow?: ColorType
     shadowOffset?: {x: number,y:number}
@@ -44,7 +44,7 @@ interface DrawableViewProps extends ViewProps {
     strokeMiter?:number
 
     fill?:ColorType
-    bgColor?: ColorType
+    
 }
 
 declare class DrawableComponent extends React.Component<DrawableViewProps> {}

@@ -14,20 +14,20 @@ import jjutils
 class DrawableView: UIView {
     
 
-    let mDrawable = JJDrawable()
+    let mDrawable = Drawable()
     
-    
+     
     init() {
         super.init(frame: .zero)
         layer.addSublayer(mDrawable)
         mDrawable.setShape(s: .svgPath)
-        mDrawable.setStrokeMiter(4)
+        mDrawable.setStrokeMiter(miter: 4)
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.addSublayer(mDrawable)
         mDrawable.setShape(s: .svgPath)
-        mDrawable.setStrokeMiter(4)
+        mDrawable.setStrokeMiter(miter: 4)
     }
     
     required init?(coder: NSCoder) {fatalError("init(coder:) has not been implemented")}
@@ -63,13 +63,13 @@ class DrawableView: UIView {
     }
     @objc func setPathRotation(_ r:NSNumber?){
         let rotation = CGFloat(truncating: r ?? 0)
-        mDrawable.setPathRotation(degrees: rotation)
+        mDrawable.setRotationZ(degrees: rotation)
         mDrawable.invalidateSelf()
     }
     @objc func setPathScale(_ v:[String:Any]?){
             let x = v?["x"] as? CGFloat ?? 1
             let y = v?["y"] as? CGFloat ?? 1
-            mDrawable.setPathScale(sx: x, sy: y)
+            mDrawable.setScale(sx: x, sy: y)
             mDrawable.invalidateSelf()
     }
     @objc func setPathTranslation(_ v:[String:Any]?){
@@ -79,15 +79,15 @@ class DrawableView: UIView {
         let per = v?["percentageValue"] as? Bool ?? false
       
         if(per){
-            mDrawable.setPathTranslation(percentX: x, percentY: y, plusX: 0, plusY: 0)
+            mDrawable.setTranslation(percentX: x, percentY: y, plusX: 0, plusY: 0)
         }else{
-            mDrawable.setPathTranslation(dx: x, dy: y)
+            mDrawable.setTranslation(dx: x, dy: y)
         }
         mDrawable.invalidateSelf()
      
     }
     
-    @objc func setShadowColor(_ c:NSNumber?){
+    @objc func setShadow(_ c:NSNumber?){
         let color = Int(truncating: c ?? 0)
         mDrawable.setShadowColor(c: c == nil ? UIColor.black.cgColor : UIColor.parseInt(argb: color).cgColor)
         mDrawable.invalidateSelf()
@@ -114,7 +114,7 @@ class DrawableView: UIView {
         mDrawable.setStrokeWidth(w: sw)
         mDrawable.invalidateSelf()
     }
-    @objc func setStrokeColor(_ v:NSNumber?){
+    @objc func setStroke(_ v:NSNumber?){
         let color = Int(truncating: v ?? 0)
         mDrawable.setStrokeColor(color:  v == nil ? UIColor.black.cgColor : UIColor.parseInt(argb: color).cgColor)
         mDrawable.invalidateSelf()
@@ -130,60 +130,51 @@ class DrawableView: UIView {
         mDrawable.invalidateSelf()
     }
     @objc func setStrokeCap(_ v:String?){
-        var cap = DrawableLineCap.butt
+        var cap = CAShapeLayerLineCap.init(rawValue: "butt")
         switch(v ?? "butt"){
             case "round":
-                cap = DrawableLineCap.round
+                cap = CAShapeLayerLineCap.init(rawValue: "round")
                 break
             case "square" :
-                cap = DrawableLineCap.square
+                cap = CAShapeLayerLineCap.init(rawValue: "square")
                 break
             default:
-                cap = DrawableLineCap.butt
+                cap = CAShapeLayerLineCap.init(rawValue: "butt")
                 break
          }
-         mDrawable.setStrokeCap(cap)
+        mDrawable.setStrokeCap(cap: cap)
          mDrawable.invalidateSelf()
      }
      
     @objc func setStrokeJoin(_ v:String?){
-        var join = DrawableLineJoin.miter
+        var join = CAShapeLayerLineJoin.miter
         switch(v ?? "miter"){
             case "round":
-                join = DrawableLineJoin.round
+                join = CAShapeLayerLineJoin.round
                 break
             case "bevel" :
-                join = DrawableLineJoin.bevel
+                join = CAShapeLayerLineJoin.bevel
                 break
             default:
-                join = DrawableLineJoin.miter
+                join = CAShapeLayerLineJoin.miter
                 break
          }
-         mDrawable.setStrokeJoin(join)
+        mDrawable.setStrokeJoin(join: join)
          mDrawable.invalidateSelf()
      }
      
     @objc func setStrokeMiter(_ v:NSNumber?){
         let value = CGFloat(truncating: v ?? 4)
-        mDrawable.setStrokeMiter(value)
+        mDrawable.setStrokeMiter(miter: value)
          mDrawable.invalidateSelf()
      }
-    @objc func setPathInset(_ v:[String:Any]?){
-        let x = v?["x"] as? CGFloat ?? 0
-        let y = v?["y"] as? CGFloat ?? 0
-        mDrawable.setInset(dx: x,dy: y)
-         mDrawable.invalidateSelf()
-     }
-    @objc func setFillColor(_ v:NSNumber?){
+
+    @objc func setFill(_ v:NSNumber?){
         let color = Int(truncating: v ?? 0)
         mDrawable.setFillColor(c:  v == nil ? UIColor.clear.cgColor : UIColor.parseInt(argb: color).cgColor)
         mDrawable.invalidateSelf()
     }
-    @objc func setBgColor(_ v:NSNumber?){
-        let color = Int(truncating: v ?? 0)
-        mDrawable.setBackgroundColor(c:  v == nil ? UIColor.clear.cgColor : UIColor.parseInt(argb: color).cgColor)
-        mDrawable.invalidateSelf()
-    }
+   
     
     
           

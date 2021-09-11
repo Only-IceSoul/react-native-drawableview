@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D001C326263B2BB700443894 /* DrawableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D001C325263B2BB700443894 /* DrawableView.swift */; };
-		D001C329263B2BC300443894 /* Drawable.m in Sources */ = {isa = PBXBuildFile; fileRef = D001C328263B2BC200443894 /* Drawable.m */; };
-		D001C32C263B2BCB00443894 /* Drawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D001C32B263B2BCB00443894 /* Drawable.swift */; };
+		D001C329263B2BC300443894 /* JJSDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = D001C328263B2BC200443894 /* JJSDrawable.m */; };
+		D001C32C263B2BCB00443894 /* JJSDrawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D001C32B263B2BCB00443894 /* JJSDrawable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,8 +28,8 @@
 		134814201AA4EA6300B7C361 /* libDrawableview.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDrawableview.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D001C324263B2BB600443894 /* Drawableview-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Drawableview-Bridging-Header.h"; sourceTree = "<group>"; };
 		D001C325263B2BB700443894 /* DrawableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawableView.swift; sourceTree = "<group>"; };
-		D001C328263B2BC200443894 /* Drawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Drawable.m; sourceTree = "<group>"; };
-		D001C32B263B2BCB00443894 /* Drawable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawable.swift; sourceTree = "<group>"; };
+		D001C328263B2BC200443894 /* JJSDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJSDrawable.m; sourceTree = "<group>"; };
+		D001C32B263B2BCB00443894 /* JJSDrawable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JJSDrawable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +55,8 @@
 			isa = PBXGroup;
 			children = (
 				D001C325263B2BB700443894 /* DrawableView.swift */,
-				D001C32B263B2BCB00443894 /* Drawable.swift */,
-				D001C328263B2BC200443894 /* Drawable.m */,
+				D001C32B263B2BCB00443894 /* JJSDrawable.swift */,
+				D001C328263B2BC200443894 /* JJSDrawable.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				D001C324263B2BB600443894 /* Drawableview-Bridging-Header.h */,
 			);
@@ -120,8 +120,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D001C32C263B2BCB00443894 /* Drawable.swift in Sources */,
-				D001C329263B2BC300443894 /* Drawable.m in Sources */,
+				D001C32C263B2BCB00443894 /* JJSDrawable.swift in Sources */,
+				D001C329263B2BC300443894 /* JJSDrawable.m in Sources */,
 				D001C326263B2BB700443894 /* DrawableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
