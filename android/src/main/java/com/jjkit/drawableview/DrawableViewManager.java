@@ -44,19 +44,19 @@ class DrawableViewManager extends ViewGroupManager<DrawableView> {
             v[3] = (float)viewBox.getDouble(3);
         }
         view.getDrawable().setSvgPath(d,view.getResources().getDisplayMetrics().density, v,align,a);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "pathRotation",defaultFloat = 0f)
     public void setPathRotation(DrawableView view , float r){
         view.getDrawable().setPathRotation(r);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "pathScale")
     public void setPathScale(DrawableView view,ReadableMap v){
         float x = (float) ModUtil.getDouble(v,"x",1.0);
         float y = (float) ModUtil.getDouble(v,"y",1.0);
         view.getDrawable().setPathScale(x,y);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
 
     @ReactProp(name = "pathTranslation")
@@ -70,50 +70,50 @@ class DrawableViewManager extends ViewGroupManager<DrawableView> {
         }else{
             view.getDrawable().setPathTranslation(toDip(dx,view),toDip(dy,view));
         }
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
 
     @ReactProp(name = "shadow",defaultInt = Color.BLACK)
     public void setShadow(DrawableView view , int v){
         view.getDrawable().setShadowColor(v);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "shadowOffset")
     public void setShadowOffset(DrawableView view ,ReadableMap v){
         float x = (float) ModUtil.getDouble(v,"x",0.0);
         float y = (float) ModUtil.getDouble(v,"y",0.0);
         view.getDrawable().setShadowOffset(toDip(x,view),toDip(y,view),false);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "shadowOpacity",defaultFloat = 0f)
     public void setShadowOpacity(DrawableView view, float v){
         view.getDrawable().setShadowOpacity(v);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "shadowRadius",defaultFloat = 1f)
     public void setShadowRadius(DrawableView view ,float v){
         view.getDrawable().setShadowRadius(toDip(v,view));
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "strokeWidth",defaultFloat = 0f)
     public void setStrokeWidth(DrawableView view ,float v){
         view.getDrawable().setStrokeWidth(toDip(v,view));
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "stroke",defaultInt = Color.BLACK)
     public void setStroke(DrawableView view ,int v){
         view.getDrawable().setStrokeColor(v);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "strokeStart",defaultFloat = 0f)
     public void setStrokeStart(DrawableView view ,float v){
         view.getDrawable().setStrokeStart(v);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "strokeEnd",defaultFloat = 1f)
     public void setStrokeEnd(DrawableView view ,float v){
         view.getDrawable().setStrokeEnd(v);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "strokeCap")
     public void setStrokeCap(DrawableView view ,String v){
@@ -122,24 +122,24 @@ class DrawableViewManager extends ViewGroupManager<DrawableView> {
                 : ("square".equals(v) ? Paint.Cap.SQUARE : Paint.Cap.BUTT );
 
         view.getDrawable().setStrokeCap(cap);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "strokeJoin")
     public void setStrokeJoin(DrawableView view,String v){
         Paint.Join join = "round".equals(v) ? Paint.Join.ROUND
                 : ("bevel".equals(v) ? Paint.Join.BEVEL : Paint.Join.MITER );
         view.getDrawable().setStrokeJoin(join);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "strokeMiter",defaultFloat = 4f)
     public void setStrokeMiter(DrawableView view ,float v){
         view.getDrawable().setStrokeMiter(v);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
     @ReactProp(name = "fill", defaultInt = Color.TRANSPARENT)
     public void setFill(DrawableView view ,int v){
         view.getDrawable().setFillColor(v);
-        view.getDrawable().invalidateSelf();
+        view.invalidate();
     }
  
     private float toDip(float num, DrawableView view){
