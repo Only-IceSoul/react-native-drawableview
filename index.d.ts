@@ -1,9 +1,8 @@
 import React from "react";
 import { Constructor, NativeMethods, ViewProps } from "react-native";
 
-type Color = number | string;
+type ColorType = number | string;
 
-//atributo dasharray y todo el drawable view, actualizar inset con dip en android, traer el color de gradient
 interface DrawableViewProps extends ViewProps {
   
     path?:{
@@ -30,13 +29,13 @@ interface DrawableViewProps extends ViewProps {
     }
     pathInset?:{ x:number,y:number }
     
-    shadowColor?: Color
+    shadow?: ColorType
     shadowOffset?: {x: number,y:number}
     shadowOpacity?: number
     shadowRadius?:number
 
     strokeWidth?:number
-    strokeColor?: Color
+    stroke?: ColorType
     strokeStart?:number
     strokeEnd?:number
     dashArray?:number
@@ -44,8 +43,8 @@ interface DrawableViewProps extends ViewProps {
     strokeJoin?: 'bevel' | 'miter' | 'round'
     strokeMiter?:number
 
-    fillColor?:number | string
-    bgColor?: Color
+    fill?:ColorType
+    bgColor?: ColorType
 }
 
 declare class DrawableComponent extends React.Component<DrawableViewProps> {}

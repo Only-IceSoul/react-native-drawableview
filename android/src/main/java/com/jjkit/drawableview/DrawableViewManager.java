@@ -18,7 +18,7 @@ class DrawableViewManager extends ViewGroupManager<DrawableView> {
 
     @Override
     public String getName() {
-        return "Drawable";
+        return "JJSDrawable";
     }
 
     @Override
@@ -73,8 +73,8 @@ class DrawableViewManager extends ViewGroupManager<DrawableView> {
         view.getDrawable().invalidateSelf();
     }
 
-    @ReactProp(name = "shadowColor",defaultInt = Color.BLACK)
-    public void setShadowColor(DrawableView view , int v){
+    @ReactProp(name = "shadow",defaultInt = Color.BLACK)
+    public void setShadow(DrawableView view , int v){
         view.getDrawable().setShadowColor(v);
         view.getDrawable().invalidateSelf();
     }
@@ -100,8 +100,8 @@ class DrawableViewManager extends ViewGroupManager<DrawableView> {
         view.getDrawable().setStrokeWidth(toDip(v,view));
         view.getDrawable().invalidateSelf();
     }
-    @ReactProp(name = "strokeColor",defaultInt = Color.BLACK)
-    public void setStrokeColor(DrawableView view ,int v){
+    @ReactProp(name = "stroke",defaultInt = Color.BLACK)
+    public void setStroke(DrawableView view ,int v){
         view.getDrawable().setStrokeColor(v);
         view.getDrawable().invalidateSelf();
     }
@@ -143,8 +143,8 @@ class DrawableViewManager extends ViewGroupManager<DrawableView> {
         view.getDrawable().setInset(toDip(x,view),toDip(y,view));
         view.getDrawable().invalidateSelf();
     }
-    @ReactProp(name = "fillColor", defaultInt = Color.TRANSPARENT)
-    public void setFillColor(DrawableView view ,int v){
+    @ReactProp(name = "fill", defaultInt = Color.TRANSPARENT)
+    public void setFill(DrawableView view ,int v){
         view.getDrawable().setFillColor(v);
         view.getDrawable().invalidateSelf();
     }

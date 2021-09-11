@@ -13,6 +13,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -346,10 +347,10 @@ private final RectF mBlurRect = new RectF();
                         setupRect();
                         setupPath();
 
-                        setupCanvasMatrix();
+//                        setupCanvasMatrix();
 
                         int checkpoint = canvas.save();
-                        canvas.concat(mCanvasMatrix);
+                        canvas.concat(mPathMatrix);
                         try {
 
                                 if(mPaintBg.getColor() != Color.TRANSPARENT) {
@@ -521,7 +522,7 @@ private void setupPath(){
         mPathMatrix.postRotate(mPathRotation,mPathBounds.centerX(),mPathBounds.centerY());
         mPathMatrix.postScale(mPathScaleX,mPathScaleY,mPathBounds.centerX(),mPathBounds.centerY());
         mPathMatrix.postTranslate(transX,transY);
-        mPath.transform(mPathMatrix);
+//        mPath.transform(mPathMatrix);
         }
 
 }
