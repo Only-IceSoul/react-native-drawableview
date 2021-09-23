@@ -5,45 +5,63 @@ type ColorType = number | string;
 
 interface DrawableViewProps extends ViewProps {
   
-    path?:{
-        d:string
-        viewBox:number[] 
-        aspect?: 'meet' | 'slice' | 'none'
-        align?:'xMinYMin'|
-        'xMidYMin' |
-        'xMaxYMin' |
-        'xMinYMid' |
-        'xMidYMid' |
-        'xMaxYMid' |
-        'xMinYMax' |
-        'xMidYMax' |
-        'xMaxYMax' |
-        'none'
-    }
-    pathScale?:{ x:number,y:number }
-    pathRotation?: number
-    pathTranslation?:{
-        dx:number,
-        dy:number,
-        percentageValue:boolean
-    }
-    
-    
-    shadow?: ColorType
-    shadowOffset?: {x: number,y:number}
-    shadowOpacity?: number
-    shadowRadius?:number
+    d:string
+    viewBox?:number[] 
+    aspect?: 'meet' | 'slice' | 'none'
+    align?:'xMinYMin'|
+    'xMidYMin' |
+    'xMaxYMin' |
+    'xMinYMid' |
+    'xMidYMid' |
+    'xMaxYMid' |
+    'xMinYMax' |
+    'xMidYMax' |
+    'xMaxYMax' |
+    'none'
 
-    strokeWidth?:number
+    opacity?:number
+    translateZ?:number
+
+    fill?:ColorType
+    fillRule?: 'evenodd' | 'nonzero'
+    fillOpacity?:number
+
     stroke?: ColorType
+    strokeOpacity?:number
+    strokeWidth?:number
     strokeStart?:number
     strokeEnd?:number
-    dashArray?:number
     strokeCap?:'butt' | 'round' | 'square'
     strokeJoin?: 'bevel' | 'miter' | 'round'
     strokeMiter?:number
 
-    fill?:ColorType
+    shadow?: ColorType
+    shadowOffset?:number
+    shadowOffsetX?:number
+    shadowOffsetY?:number
+    shadowPercentageValue?:boolean
+    shadowOpacity?: number
+    shadowRadius?:number
+    
+    // transformOrder?: "r-s-t" | "r-t-s" | "s-r-t" | "s-t-r" | "t-r-s" | "t-s-r" 
+
+    transX?:number
+    transY?:number
+    transPercentageValue?:boolean
+    
+    rot?:number
+    rotO?:number
+    rotOx?:number
+    rotOy?:number
+    rotPercentageValue?:boolean
+
+    sc?:number
+    scX?:number
+    scY?:number
+    scO?:number
+    scOx?:number
+    scOy?:number
+    scPercentageValue?:boolean
     
 }
 
