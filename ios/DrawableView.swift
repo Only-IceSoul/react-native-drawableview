@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import jjutils
+
 
 @objc(DrawableView)
 class DrawableView: UIView {
@@ -20,14 +20,13 @@ class DrawableView: UIView {
     init() {
         super.init(frame: .zero)
         layer.addSublayer(mDrawable)
-        mDrawable.setShape(s: .svgPath)
-        mDrawable.setStrokeMiter(miter: 4)
+    
+
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.addSublayer(mDrawable)
-        mDrawable.setShape(s: .svgPath)
-        mDrawable.setStrokeMiter(miter: 4)
+      
     }
     
     required init?(coder: NSCoder) {fatalError("init(coder:) has not been implemented")}
@@ -38,142 +37,215 @@ class DrawableView: UIView {
         }
     }
     
-    @objc func setPath(_ p:[String:Any]?){
-        
-            let d = p?["d"] as? String ?? ""
-            let viewBox = p?["viewBox"] as? [CGFloat] ?? [0,0,0,0]
-            let aspect = p?["aspect"] as? String ?? "none"
-            let align = p?["align"] as? String ?? "none"
-            var a :ViewBox.AspectRatio = .none
-            switch aspect {
-            case "meet":
-                a = .meet
-                break
-            case "slice":
-                a = .slice
-                break
-            default:
-                a = .none
-                break
-            }
-
-            mDrawable.setSvgPath(d: d,viewBox: viewBox,align: align,aspect: a)
-            mDrawable.invalidateSelf()
-        
-    }
-    @objc func setPathRotation(_ r:NSNumber?){
-        let rotation = CGFloat(truncating: r ?? 0)
-        mDrawable.setRotationZ(degrees: rotation)
-        mDrawable.invalidateSelf()
-    }
-    @objc func setPathScale(_ v:[String:Any]?){
-            let x = v?["x"] as? CGFloat ?? 1
-            let y = v?["y"] as? CGFloat ?? 1
-            mDrawable.setScale(sx: x, sy: y)
-            mDrawable.invalidateSelf()
-    }
-    @objc func setPathTranslation(_ v:[String:Any]?){
-
-        let x = v?["dx"] as? CGFloat ?? 0
-        let y = v?["dy"] as? CGFloat ?? 0
-        let per = v?["percentageValue"] as? Bool ?? false
-      
-        if(per){
-            mDrawable.setTranslation(percentX: x, percentY: y, plusX: 0, plusY: 0)
-        }else{
-            mDrawable.setTranslation(dx: x, dy: y)
-        }
-        mDrawable.invalidateSelf()
-     
+    @objc func setD(_ v:String?){
+        let ev = v == nil ? "" : v!
+        mDrawable.setD(ev)
     }
     
-    @objc func setShadow(_ c:NSNumber?){
-        let color = Int(truncating: c ?? 0)
-        mDrawable.setShadowColor(c: c == nil ? UIColor.black.cgColor : UIColor.parseInt(argb: color).cgColor)
-        mDrawable.invalidateSelf()
+    @objc func setViewBox(_ v:NSArray?){
+        let arr = v as? [CGFloat] ?? [0 , 0 ,-1 ,-1]
+        mDrawable.setViewBox(arr)
     }
-    @objc func setShadowOffset(_ v:[String:Any]?){
-        let x = v?["x"] as? CGFloat ?? 0
-        let y = v?["y"] as? CGFloat ?? 0
-        mDrawable.setShadowOffset(p: CGSize(width: x, height: y))
-        mDrawable.invalidateSelf()
+   
+    @objc func setAlign(_ v:NSString?){
+        let align = v as String? ?? "xMidYMid"
+        mDrawable.setAlign(align)
+    }
+    @objc func setAspect(_ v:NSString?){
+        let aspect = v as String? ?? "meet"
+        let a : SVGViewBox.AspectRatio = aspect == "slice" ? .slice : ( aspect == "none" ? .none : .meet)
+        mDrawable.setAspect(a)
+    }
+    
+    
+    @objc func setTranslateZ(_ v:NSNumber?){
+        let ev = CGFloat(truncating: v ?? 0)
+        layer.zPosition = ev
 
     }
-    @objc func setShadowOpacity(_ v:NSNumber?){
-        let op = Float(truncating: v ?? 0)
-        mDrawable.setShadowOpacity(o: op)
-        mDrawable.invalidateSelf()
+
+    @objc func setOpacity(_ v:NSNumber?) {
+        let ev = Float(truncating: v ?? 1)
+        mDrawable.setOpacity(ev)
+        
     }
-    @objc func setShadowRadius(_ v:NSNumber?){
-        let rad = CGFloat(truncating: v ?? 1)
-        mDrawable.setShadowRadius(r: rad)
-        mDrawable.invalidateSelf()
+
+
+    @objc func setFill(_ v:NSNumber?) {
+        let ev = Int(truncating: v ?? 0xFF000000)
+        mDrawable.setFill(ev)
     }
-    @objc func setStrokeWidth(_ v:NSNumber?){
-        let sw = CGFloat(truncating: v ?? 0)
-        mDrawable.setStrokeWidth(w: sw)
-        mDrawable.invalidateSelf()
+
+
+    @objc func setFillRule(_ v:NSString?) {
+        let rule = v as String? ?? "none"
+        mDrawable.setFillRule(rule)
     }
-    @objc func setStroke(_ v:NSNumber?){
-        let color = Int(truncating: v ?? 0)
-        mDrawable.setStrokeColor(color:  v == nil ? UIColor.black.cgColor : UIColor.parseInt(argb: color).cgColor)
-        mDrawable.invalidateSelf()
-    }
-    @objc func setStrokeStart(_ v:NSNumber?){
-        let sv = CGFloat(truncating: v ?? 0)
-        mDrawable.setStrokeStart(s: sv)
-        mDrawable.invalidateSelf()
-    }
-    @objc func setStrokeEnd(_ v:NSNumber?){
+
+
+    @objc func setFillOpacity(_ v:NSNumber?) {
         let ev = CGFloat(truncating: v ?? 1)
-        mDrawable.setStrokeEnd(e: ev)
-        mDrawable.invalidateSelf()
+        mDrawable.setFillOpacity(ev)
     }
-    @objc func setStrokeCap(_ v:String?){
-        var cap = CAShapeLayerLineCap.init(rawValue: "butt")
-        switch(v ?? "butt"){
-            case "round":
-                cap = CAShapeLayerLineCap.init(rawValue: "round")
-                break
-            case "square" :
-                cap = CAShapeLayerLineCap.init(rawValue: "square")
-                break
-            default:
-                cap = CAShapeLayerLineCap.init(rawValue: "butt")
-                break
-         }
-        mDrawable.setStrokeCap(cap: cap)
-         mDrawable.invalidateSelf()
-     }
-     
-    @objc func setStrokeJoin(_ v:String?){
-        var join = CAShapeLayerLineJoin.miter
-        switch(v ?? "miter"){
-            case "round":
-                join = CAShapeLayerLineJoin.round
-                break
-            case "bevel" :
-                join = CAShapeLayerLineJoin.bevel
-                break
-            default:
-                join = CAShapeLayerLineJoin.miter
-                break
-         }
-        mDrawable.setStrokeJoin(join: join)
-         mDrawable.invalidateSelf()
-     }
-     
-    @objc func setStrokeMiter(_ v:NSNumber?){
-        let value = CGFloat(truncating: v ?? 4)
-        mDrawable.setStrokeMiter(miter: value)
-         mDrawable.invalidateSelf()
-     }
 
-    @objc func setFill(_ v:NSNumber?){
-        let color = Int(truncating: v ?? 0)
-        mDrawable.setFillColor(c:  v == nil ? UIColor.clear.cgColor : UIColor.parseInt(argb: color).cgColor)
-        mDrawable.invalidateSelf()
+
+    @objc func setStroke(_ v:NSNumber?) {
+        let ev = Int(truncating: v ?? 0)
+        mDrawable.setStroke(ev)
     }
+
+
+    @objc func setStrokeOpacity(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 1)
+        mDrawable.setStrokeOpacity(ev)
+       
+    }
+
+
+    @objc func setStrokeWidth(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 1)
+        mDrawable.setStrokeWidth(ev)
+    }
+
+
+    @objc func setStrokeCap(_ v:NSString?) {
+        let ev = v as String? ?? "none"
+        mDrawable.setStrokeCap(ev)
+    }
+
+
+    @objc func setStrokeJoin(_ v:NSString?) {
+        let ev = v as String? ?? "none"
+        mDrawable.setStrokeJoin(ev)
+    }
+
+    @objc func setStrokeMiter(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 4)
+        mDrawable.setStrokeMiter(ev)
+       
+    }
+
+
+    @objc func setStrokeStart(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 0)
+        mDrawable.setStrokeStart(ev)
+       
+    }
+
+
+    @objc func setStrokeEnd(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 1)
+        mDrawable.setStrokeEnd(ev)
+    }
+
+
+
+    @objc func setShadow(_ v:NSNumber?) {
+        let ev = Int(truncating: v ?? 0xFF000000)
+        mDrawable.setShadow(ev)
+       
+    }
+
+    @objc func setShadowOpacity(_ v:NSNumber?) {
+        let ev = Float(truncating: v ?? 0)
+        mDrawable.setShadowOpacity(ev)
+    }
+
+
+    @objc func setShadowRadius(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 2)
+        mDrawable.setShadowRadius(ev)
+    }
+
+
+    @objc func setShadowOffset(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 2)
+        mDrawable.setShadowOffset(ev)
+    }
+    @objc func setShadowOffsetX(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 2)
+        mDrawable.setShadowOffsetX(ev)
+    }
+    @objc func setShadowOffsetY(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 2)
+        mDrawable.setShadowOffsetY(ev)
+    }
+    @objc func setShadowPercentageValue(_ v:NSNumber?) {
+        let n = v == nil ? 0 : Int(truncating: v!)
+        let b = n >= 1 ? true : false
+        mDrawable.setShadowPercentageValue(b)
+        
+    }
+    
+    //MARK: Transform props
+    @objc func setTransX(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 0)
+        mDrawable.setTransX(v: ev)
+       }
+    @objc func setTransY(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 0)
+        mDrawable.setTransY(v: ev)
+       }
+    @objc func setTransPercentageValue(_ v:NSNumber?) {
+        let n = v == nil ? 0 : Int(truncating: v!)
+        let b = n >= 1 ? true : false
+        mDrawable.setTransPercentageValue(v: b)
+       }
+
+    @objc func setRot(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 0)
+        mDrawable.setRot(v: ev)
+       }
+    @objc func setRotO(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 0)
+        mDrawable.setRotO(v: ev)
+       }
+    @objc func setRotOx(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 0)
+        mDrawable.setRotOx(v: ev)
+       }
+    @objc func setRotOy(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 0)
+        mDrawable.setRotOy(v: ev)
+       }
+    @objc func setRotPercentageValue(_ v:NSNumber?) {
+        let n = v == nil ? 0 : Int(truncating: v!)
+        let b = n >= 1 ? true : false
+        mDrawable.setRotPercentageValue(v: b)
+       }
+
+    @objc func setSc(_ v:NSNumber?){
+        let ev = CGFloat(truncating: v ?? 1)
+        mDrawable.setSc(v: ev)
+       }
+    @objc func setScX(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 1)
+        mDrawable.setScX(v: ev)
+       }
+
+    @objc func setScY(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 1)
+        mDrawable.setScY(v: ev)
+       }
+    @objc func setScO(_ v:NSNumber?){
+        let ev = CGFloat(truncating: v ?? 0)
+        mDrawable.setScO(v: ev)
+       }
+    @objc func setScOx(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 0)
+        mDrawable.setScOx(v: ev)
+       }
+    @objc func setScOy(_ v:NSNumber?) {
+        let ev = CGFloat(truncating: v ?? 0)
+        mDrawable.setScOy(v: ev)
+       }
+    @objc func setScPercentageValue(_ v:NSNumber?) {
+        let n = v == nil ? 0 : Int(truncating: v!)
+        let b = n >= 1 ? true : false
+        mDrawable.setScPercentageValue(v: b)
+       }
+
+        
    
     
     
