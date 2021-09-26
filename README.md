@@ -68,14 +68,15 @@ import {Drawableview , Color} from 'react-native-drawableview';
 | strokeMiter | control the behavior of miter | Number | 4 |
 | strokeStart | the start | Number | 0 |
 | strokeEnd | the end | Number | 1 |
+| dashArray | required (web) | Number | 0 |
 | shadow | set the sahdow color  | Color | 'black' |
 | shadowOpacity | set the shadow opacity [0 - 1]  | Number | 0 |
 | shadowRadius | the radius | Number | 2 |
 | shadowOffset | set the offset | Number | 2  |
 | shadowOffsetX | set the offset x | Number | 2  |
 | shadowOffsetY | set the offset y| Number | 2  |
-| shadowPercentageValue | offset * size | Bool | false |
-
+| shadowPercentageValue | offset * size (mobile) | Bool | false |
+| shadowRect | clip Region (web) | Object | size * 3 |
 
 <br>
 
@@ -83,14 +84,14 @@ import {Drawableview , Color} from 'react-native-drawableview';
 
 <br>
 
-The percentageValue property refers to the fact that the Origin will be multiplied by the size of the view.  
+The percentageValue property (mobile) : refers to the fact that the Origin will be multiplied by the size of the view.  
   
 | Name | type | default |
 | --- | --- | --- |
 | translateZ | Number (zIndex) | 0 |
 | transX | Number | 0 |
 | transY | Number | 0 |
-| transPercentageValue | Bool | false |
+| transPercentageValue | Bool | false |  
 | rot | Number | 0 |
 | rotOx | Number | 0 |
 | rotOy | Number | 0 |

@@ -34,26 +34,28 @@ interface DrawableViewProps extends ViewProps {
     strokeCap?:'butt' | 'round' | 'square'
     strokeJoin?: 'bevel' | 'miter' | 'round'
     strokeMiter?:number
+    dashArray?:number  //web
 
     shadow?: ColorType
     shadowOffset?:number
     shadowOffsetX?:number
     shadowOffsetY?:number
-    shadowPercentageValue?:boolean
+    shadowPercentageValue?:boolean //mobile
     shadowOpacity?: number
     shadowRadius?:number
-    
+    shadowRect?:{ x:number,y:number,w:number,h:number, units:'userSpaceOnUse' | 'objectBoundingBox'} //web
+   
     // transformOrder?: "r-s-t" | "r-t-s" | "s-r-t" | "s-t-r" | "t-r-s" | "t-s-r" 
 
     transX?:number
     transY?:number
-    transPercentageValue?:boolean
+    transPercentageValue?:boolean  //mobile
     
     rot?:number
     rotO?:number
     rotOx?:number
     rotOy?:number
-    rotPercentageValue?:boolean
+    rotPercentageValue?:boolean //mobile
 
     sc?:number
     scX?:number
@@ -61,7 +63,7 @@ interface DrawableViewProps extends ViewProps {
     scO?:number
     scOx?:number
     scOy?:number
-    scPercentageValue?:boolean
+    scPercentageValue?:boolean //mobile
     
 }
 

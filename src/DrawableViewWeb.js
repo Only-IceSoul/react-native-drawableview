@@ -6,91 +6,157 @@ const clamp = (num) =>{
 
 const DrawableViewWeb = (props) => {
     const {
-        path,
-        pathScale,
-        pathTranslation,
-        pathRotation,
-                
-        shadow,
-        shadowOffset,
-        shadowOpacity,
-        shadowRadius,
-    
-        strokeWidth,
+        d,
+        viewBox,
+        aspect,
+        align,
+   
+        fill,
+        fillRule,
+        fillOpacity,
+
         stroke,
+        strokeOpacity,
+        strokeWidth,
         strokeStart,
         strokeEnd,
         dashArray,
         strokeCap,
         strokeJoin,
         strokeMiter,
+                
+        shadow,
+        shadowOpacity,
+        shadowRadius,
+        shadowOffset,
+        shadowOffsetX,
+        shadowOffsetY,
+        shadowPercentageValue,
+        shadowRect,
+
+        opacity,
+        translateZ,
+
+        transX,
+        transY,
+        transPercentageValue,
+
+        rot,
+        rotO,
+        rotOx,
+        rotOy,
+        rotPercentageValue,
+
+        sc,
+        scX,
+        scY,
+        scO,
+        scOx,
+        scOy,
+        scPercentageValue,
     
-         fill,
+       
         ...rest 
     } = props
 
+    const path = d === undefined ? "" : d
+    const vb = viewBox === undefined ? [0,0,-1,-1] : viewBox
+    const asp = aspect === undefined ? "meet" : aspect
+    const alg = align === undefined ? "xMidYMid" : align
 
-    const vb = path === undefined ? [0,0,0,0] : (path.viewBox === undefined ? [0,0,0,0] : path.viewBox) 
 
-    const d = path === undefined ? "" : path.d
-    const aspect = path === undefined ? "none" : (path.aspect === undefined ? 'none' : path.aspect)
-    const align = path === undefined ? "none" : (path.align === undefined ? 'none' : path.align)
+    const fc = fill === undefined ? 'black' : fill
+    const fo = fillOpacity === undefined ? 1 : fillOpacity
+    const fr = fillRule === undefined ? "nonzero" : fillRule
 
-    const sc = stroke === undefined ? 'black' : stroke
-    const fc = fill === undefined ? 'none' : fill
-    const sw = strokeWidth === undefined ? 0 : strokeWidth
-    
-    const scaleX = pathScale === undefined ? 1 : pathScale.x
-    const scaleY = pathScale === undefined ? 1 : pathScale.y
-    const dx = pathTranslation === undefined ? '0px' : ( pathTranslation.percentageValue ? `${pathTranslation.dx * 100}%` : `${pathTranslation.dx}px` )
-    const dy = pathTranslation === undefined ? '0px' : ( pathTranslation.percentageValue ? `${pathTranslation.dy * 100}%` : `${pathTranslation.dy}px` )
-    const rot = pathRotation === undefined ? 0 : pathRotation
+    const stc = stroke === undefined ? 'transparent' : stroke
+    const so = strokeOpacity === undefined ? 1 : strokeOpacity
+    const sw = strokeWidth === undefined ? 1 : strokeWidth
+    const se = strokeEnd === undefined ? 1 : clamp(strokeEnd)
+    const ss = strokeStart === undefined ? 0 : clamp(strokeStart)
+    const dasharr = dashArray === undefined ? 0 : dashArray
     const cap = strokeCap === undefined ? "butt" : strokeCap
     const join = strokeJoin === undefined ? "miter" : strokeJoin
     const miterLimit = strokeMiter === undefined ? 4 : strokeMiter
+
     const shc = shadow === undefined ? 'rgba(0,0,0,1)'.split(",") : shadow.split(",")
     const sho = shadowOpacity === undefined ? 0 : clamp(shadowOpacity)
-    const sox = shadowOffset === undefined ? 0 : shadowOffset.x
-    const soy = shadowOffset === undefined ? 0 : shadowOffset.y
-    const shr = shadowRadius === undefined ? 1 : shadowRadius
+    const shr = shadowRadius === undefined ? 2 : shadowRadius
+    const shox = shadowOffset === undefined ? (shadowOffsetX === undefined ? 2 : shadowOffsetX ) : shadowOffset
+    const shoy =  shadowOffset === undefined ? (shadowOffsetY === undefined ? 2 : shadowOffsetY) : shadowOffset
+    const shRect = shadowRect === undefined ? {x:-2, y:-2 , w:5,h:5, units:'objectBoundingBox'} : shadowRect
+ 
+    const op = opacity === undefined ? 1 : opacity
+    const zIndex = translateZ === undefined ? 0 : translateZ
+    
+ 
 
 
-    const end = strokeEnd === undefined ? 1 : clamp(strokeEnd)
-    const start = strokeStart === undefined ? 0 : clamp(strokeStart)
+    const dx = transX === undefined ? 0 : transX
+    const dy = transY === undefined ? 0 : transY
 
-    const dasharr = dashArray === undefined ? 0 : dashArray
+    const scaleX = sc === undefined ? ( scX === undefined ? 1 : scX) : sc
+    const scaleY = sc === undefined ?  (scY === undefined ? 1 : scY) : sc
+    const scaleOX = scO === undefined ? ( scOx === undefined ? 0 : scOx) : scO
+    const scaleOY = scO === undefined ?  (scOy === undefined ? 0 : scOy) : scO
+
+    const rotation = rot === undefined ? 0 : rot
+    const rotationOX = rotO === undefined ? ( rotOx === undefined ? 0 : rotOx) : rotO
+    const rotationOY = rotO === undefined ?  (rotOy === undefined ? 0 : rotOy) : rotO
+
+
+
+    const transform = `rotate(${rotation} ${rotationOX} ${rotationOY}) translate(${scaleOX} ${scaleOY}) scale(${scaleX} ${scaleY}) translate(${-scaleOX} ${-scaleOY}) translate(${dx} ${dy})`
+  
+
+    const filterShadowProp = sho > 0 ? "url(#jjlfshadowfilterdrawableview)" : ""
+    
 
     return (  
            <div {...rest}>
-                <div style={{width:'100%',height:'100%'}}>
-                    <div    style={{width:'100%',height:'100%', 
-                            filter: sho > 0 ? `drop-shadow(${sox}px ${soy}px ${shr}px ${shc[0]},${shc[1]},${shc[2]},${sho * parseFloat(shc[3])}) )` : "",
-                            transform:`translate(${dx},${dy}) scale(${scaleX},${scaleY}) rotate(${rot}deg)`}}
-                    > 
-                        <svg viewBox={`${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`} 
-                             preserveAspectRatio={`${align} ${aspect}`}>
-                            <mask id="myClip" maskUnits="userSpaceOnUse" >
-                            <path d={d} fill={'none'} 
-                                    stroke={'white'} strokeWidth={`${sw/10}`}
+
+                <div style={{width:'100%',height:'100%',position:'absolute',left:0,top:0,opacity:op,zIndex:zIndex}}>
+
+                
+                        <svg style={{width:'100%',height:'100%',overflow:'visible'}} viewBox={`${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`} 
+                             preserveAspectRatio={`${alg} ${asp}`}>
+
+                            <defs>
+                                <filter id="jjlfshadowfilterdrawableview"
+                                    filterUnits={`${shRect.units}`}
+                                x={`${shRect.x}`} y={`${shRect.y}`} width={`${shRect.w}`} height={`${shRect.h}`}>
+                                    <feDropShadow dx={`${shox}`} dy={`${shoy}`} stdDeviation={`${shr}`} flood-color={`${shc[0]},${shc[1]},${shc[2]},${sho * parseFloat(shc[3])}`} />
+                                    </filter>
+                                </defs>
+                            <mask id="myClip" maskUnits="userSpaceOnUse" transform={transform} >
+                             
+                                    <path d={path} fill={'none'}  
+                                    stroke={'white'} strokeWidth={`${sw}`}
                                     strokeLinecap={cap} strokeLinejoin={join} strokeMiterlimit={miterLimit}
-                                    strokeDasharray={`${dasharr}`} strokeDashoffset={`${(1 - end) * dasharr}`} />
-                                    <path d={d} fill={'none'} 
-                                    stroke={'black'} strokeWidth={`${sw/10}`}
+                                    strokeDasharray={`${dasharr}`} strokeDashoffset={`${(1 - se) * dasharr}`} />
+                                    <path d={path} fill={'none'}  
+                                    stroke={'black'} strokeWidth={`${sw}`}
                                     strokeLinecap={cap} strokeLinejoin={join} strokeMiterlimit={miterLimit}
-                                    strokeDasharray={`${dasharr}`} strokeDashoffset={`${(1 - start) * dasharr}`} />
+                                    strokeDasharray={`${dasharr}`} strokeDashoffset={`${(1 - ss) * dasharr}`} />
                            
-                          
+                               
                             </mask>
-                            <path d={d} fill={fc} />
-                            {start < end ? 
-                                <path mask="url(#myClip)" d={d} fill={"none"} stroke={sc} strokeWidth={`${sw/10}`}
-                                    strokeLinecap={cap} strokeLinejoin={join} strokeMiterlimit={miterLimit}
-                                    strokeDasharray={`${dasharr}`} strokeDashoffset="0"
-                                />
-                               : null
-                            }
+
+                            <g  filter={filterShadowProp}  transform={transform}  >
+                                <path d={path} fill={fc} fillRule={fr} fillOpacity={fo}   />
+                                {ss < se ? 
+                              
+                                    <path  mask="url(#myClip)"  d={path} fill={"none"} stroke={stc} strokeOpacity={`${so}`}
+                                    strokeWidth={`${sw}`} 
+                                        strokeLinecap={cap} strokeLinejoin={join} strokeMiterlimit={`${miterLimit}`}
+                                        strokeDasharray={`${dasharr}`} strokeDashoffset="0"
+                                    />
+                                  
+                                : null
+                                }
+                            </g>
                          </svg>
-                    </div>
+            
                    
                </div>
              
