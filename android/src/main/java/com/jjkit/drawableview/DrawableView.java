@@ -44,8 +44,8 @@ public class DrawableView extends ViewGroup {
     private final RectF mBounds = new RectF();
     private final Matrix mMatrix = new Matrix();
     private String mD = "";
-    private final RectF mRectVb = new RectF();
-    private final RectF mRectVbDensity = new RectF();
+    private final RectF mRectVb = new RectF(0f,0f,-1f,-1f);
+    private final RectF mRectVbDensity = new RectF(0f,0f,-1f,-1f);
     private String mAlign = "xMidYMid";
     private int mAspect = SVGViewBox.MOS_MEET;
     private final DrawableTransform mTransform = new DrawableTransform();
