@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useMemo } from 'react'
+import { StyleSheet } from 'react-native'
 
 const clamp = (num) =>{
     return num < 0 ? 0 : (num > 1 ? 1 : num) 
@@ -55,12 +56,31 @@ const DrawableViewWeb = (props) => {
         scOy,
         scPercentageValue,
     
-       
+       style,
         ...rest 
     } = props
 
+
+    const styleObject = useMemo(()=>{
+        if (typeof style === 'number') return StyleSheet.flatten(style) 
+        if(Array.isArray(style)){
+           var styleJs = {}
+           style.forEach((v)=>{
+             if(typeof v === 'number'){
+                let ss = StyleSheet.flatten(style) 
+                Object.assign(styleJs,ss)
+             }else{
+               Object.assign(styleJs,v)
+             }
+           })
+ 
+           return styleJs
+        }
+        return style
+      },[style])
+
     const path = d === undefined ? "" : d
-    const vb = viewBox === undefined ? [0,0,-1,-1] : viewBox
+    const vb = viewBox === undefined ? undefined : `${viewBox[0]} ${viewBox[1]} ${viewBox[2]} ${viewBox[3]}`
     const asp = aspect === undefined ? "meet" : aspect
     const alg = align === undefined ? "xMidYMid" : align
 
@@ -113,19 +133,19 @@ const DrawableViewWeb = (props) => {
     
 
     return (  
-           <div {...rest}>
+           <div {...rest} style={{...styleObject,zIndex:zIndex}}>
 
-                <div style={{width:'100%',height:'100%',position:'absolute',left:0,top:0,opacity:op,zIndex:zIndex}}>
+                <div style={{width:'100%',height:'100%',position:'absolute',left:0,top:0,opacity:op}}>
 
                 
-                        <svg style={{width:'100%',height:'100%',overflow:'visible'}} viewBox={`${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`} 
+                        <svg style={{width:'100%',height:'100%',overflow:'visible'}} viewBox={vb} 
                              preserveAspectRatio={`${alg} ${asp}`}>
 
                             <defs>
                                 <filter id="jjlfshadowfilterdrawableview"
                                     filterUnits={`${shRect.units}`}
                                 x={`${shRect.x}`} y={`${shRect.y}`} width={`${shRect.w}`} height={`${shRect.h}`}>
-                                    <feDropShadow dx={`${shox}`} dy={`${shoy}`} stdDeviation={`${shr}`} flood-color={`${shc[0]},${shc[1]},${shc[2]},${sho * parseFloat(shc[3])}`} />
+                                    <feDropShadow dx={`${shox}`} dy={`${shoy}`} stdDeviation={`${shr}`} floodColor={`${shc[0]},${shc[1]},${shc[2]},${sho * parseFloat(shc[3])}`} />
                                     </filter>
                                 </defs>
                             <mask id="myClip" maskUnits="userSpaceOnUse" transform={transform} >

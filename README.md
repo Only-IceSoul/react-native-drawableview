@@ -68,7 +68,7 @@ import {Drawableview , Color} from 'react-native-drawableview';
 | strokeMiter | control the behavior of miter | Number | 4 |
 | strokeStart | the start | Number | 0 |
 | strokeEnd | the end | Number | 1 |
-| dashArray | required (web) | Number | 0 |
+| dashArray | required for stroke (web) | Number | 0 |
 | shadow | set the sahdow color  | Color | 'black' |
 | shadowOpacity | set the shadow opacity [0 - 1]  | Number | 0 |
 | shadowRadius | the radius | Number | 2 |
