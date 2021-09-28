@@ -71,4 +71,5 @@ declare class DrawableComponent extends React.Component<DrawableViewProps> {}
 declare const DrawableViewBase: Constructor<NativeMethods> & typeof DrawableComponent;
 
 export class DrawableView extends DrawableViewBase {}
+export class DrawableViewS extends DrawableViewBase {}
 export function Color(color:number | number[] | string): number; 
