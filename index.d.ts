@@ -72,4 +72,5 @@ declare const DrawableViewBase: Constructor<NativeMethods> & typeof DrawableComp
 
 export class DrawableView extends DrawableViewBase {}
 export class DrawableViewS extends DrawableViewBase {}
+export class DrawableViewB extends DrawableViewBase {}
 export function Color(color:number | number[] | string): number; 

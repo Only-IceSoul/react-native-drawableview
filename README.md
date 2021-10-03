@@ -40,8 +40,10 @@ add a .swift file
 ```javascript
 import {DrawableView ,DrawableViewS, Color} from 'react-native-drawableview';
 
-// (Android) DrawableViewS  -> shadow Layer type Software( < api 28 )
-// (Android) DrawableView  -> Layer type none 
+// (Android) DrawableViewS  -> support shadow (  Layer type Software < api 28 )
+// (Android) DrawableViewB  ->Layer type None , support shadow ( Bitmap < api 28 ) 
+// (Android) DrawableView  -> Layer type None 
+
 // TODO: What to do with the module?
 
    var colorRed = Color('red') //Color('rgba(255,0,0,1)'), #FF0000 .....
