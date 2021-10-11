@@ -1,5 +1,5 @@
-import { requireNativeComponent } from 'react-native';
+import DrawableIOS from './DrawableIOS';
 
- const DrawableView = requireNativeComponent('JJSDrawable',null)
+ const DrawableView = DrawableIOS
 
  export default DrawableView
