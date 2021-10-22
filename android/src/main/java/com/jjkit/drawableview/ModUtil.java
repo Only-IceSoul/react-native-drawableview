@@ -34,8 +34,14 @@ public class ModUtil {
     }
 
     public static float viewBoxToMax(float value,RectF viewBox,float w, float h){
-        float size = viewBox.width() > viewBox.height() ? w : h;
-        return ( value / Math.max(viewBox.width(), viewBox.height() ) ) * size;
+        float size = Math.max(w ,h);
+        float maxVb = w > h ? viewBox.width() : viewBox.height();
+        return ( value / maxVb ) * size;
+    }
+    public static float viewBoxToMin(float value,RectF viewBox,float w, float h){
+        float size = Math.min(w ,h);
+        float minVb = w > h ? viewBox.height() : viewBox.width();
+        return ( value / minVb  ) * size;
     }
     public static boolean isNull(Dynamic d){
         return d == null || d.isNull();

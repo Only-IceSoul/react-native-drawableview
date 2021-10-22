@@ -429,13 +429,8 @@ public class DrawableView extends ViewGroup {
 
     }
     protected void setupPaintStroke() {
-        float sw ;
-        if (validateViewBox()) {
-            float size = Math.max( mRectPath.width(), mRectPath.height() );
-            sw =  mProps.getStrokeWidth() / Math.max( mRectVb.width(), mRectVb.height() ) * size;
-        }else{
-            sw = toDip(mProps.getStrokeWidth());
-        }
+
+        float sw = validateViewBox() ?  ModUtil.viewBoxToMax(mProps.getStrokeWidth(),mRectVb,mRectPath.width(),mRectPath.height()) : toDip(mProps.getStrokeWidth());
         mPaintStroke.setStrokeWidth(sw);
         mPaintStroke.setColor(mProps.getStrokeColor());
 
@@ -468,13 +463,7 @@ public class DrawableView extends ViewGroup {
                 oy = toDip(mProps.getShadowOffsetY());
             }
 
-            float radius;
-            if (validateViewBox()) {
-                float size = Math.max( mRectPath.width(), mRectPath.height() );
-                radius =  (mProps.getShadowRadius() /  Math.max( mRectVb.width(), mRectVb.height() ) ) * size;
-            }else{
-                radius = toDip(mProps.getShadowRadius());
-            }
+            float radius = validateViewBox() ?  ModUtil.viewBoxToMax(mProps.getShadowRadius(),mRectVb,mRectPath.width(),mRectPath.height()) : toDip(mProps.getShadowRadius());
             paint.setShadowLayer(radius, ox, oy, c);
 
         } else {

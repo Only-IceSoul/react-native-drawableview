@@ -38,7 +38,7 @@ add a .swift file
 
 
 ```javascript
-import {DrawableView ,DrawableViewS, Color} from 'react-native-drawableview';
+import {DrawableView ,DrawableViewS,DrawableViewB, Color} from 'react-native-drawableview';
 
 // (Android) DrawableViewS  -> support shadow (  Layer type Software < api 28 )
 // (Android) DrawableViewB  ->Layer type None , support shadow ( Bitmap < api 28 ) 
