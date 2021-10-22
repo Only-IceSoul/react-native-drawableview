@@ -527,7 +527,7 @@ import UIKit
     }
  
     private func validateViewBox() -> Bool {
-        return mRectVb.width >= 0 && mRectVb.height >= 0
+        return mRectVb.size.width >= 0 && mRectVb.size.height >= 0
     }
     private func fill()->Bool{
         return mProps.getFillColor() != 0
