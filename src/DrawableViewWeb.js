@@ -131,6 +131,8 @@ const DrawableViewWeb = (props) => {
 
     const filterShadowProp = sho > 0 ? "url(#jjlfshadowfilterdrawableview)" : ""
     
+    const isFillTransparent = fc === `rgba(0, 0, 0, 0)` || fc === "transparent"
+
 
     return (  
            <div {...rest} style={{...styleObject,zIndex:zIndex}}>
@@ -147,6 +149,7 @@ const DrawableViewWeb = (props) => {
                                 x={`${shRect.x}`} y={`${shRect.y}`} width={`${shRect.w}`} height={`${shRect.h}`}>
                                     <feDropShadow dx={`${shox}`} dy={`${shoy}`} stdDeviation={`${shr}`} floodColor={`${shc[0]},${shc[1]},${shc[2]},${sho * parseFloat(shc[3])}`} />
                                     </filter>
+                                
                                 </defs>
                             <mask id="myClip" maskUnits="userSpaceOnUse" transform={transform} >
                              
@@ -162,11 +165,13 @@ const DrawableViewWeb = (props) => {
                                
                             </mask>
 
-                            <g  filter={filterShadowProp}  transform={transform}  >
-                                <path d={path} fill={fc} fillRule={fr} fillOpacity={fo}   />
+                            <g     transform={transform}  >
+                                <path d={path}  filter={!isFillTransparent ? filterShadowProp : undefined} fill={fc} fillRule={fr} fillOpacity={fo}   />
                                 {ss < se ? 
                               
-                                    <path  mask="url(#myClip)"  d={path} fill={"none"} stroke={stc} strokeOpacity={`${so}`}
+                                    <path  mask={ss !== 0 || se !== 1 ? "url(#myClip)" : undefined}
+                                    filter={isFillTransparent ? filterShadowProp : undefined} 
+                                      d={path} fill={"none"} stroke={stc} strokeOpacity={`${so}`}
                                     strokeWidth={`${sw}`} 
                                         strokeLinecap={cap} strokeLinejoin={join} strokeMiterlimit={`${miterLimit}`}
                                         strokeDasharray={`${dasharr}`} strokeDashoffset="0"
