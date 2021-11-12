@@ -4,6 +4,8 @@ import { Constructor, NativeMethods, ViewProps } from "react-native";
 type ColorType = number | string;
 
 interface DrawableViewProps extends ViewProps {
+
+    svgKey?:string
   
     d:string
     viewBox?:number[] 
@@ -35,6 +37,7 @@ interface DrawableViewProps extends ViewProps {
     strokeJoin?: 'bevel' | 'miter' | 'round'
     strokeMiter?:number
     dashArray?:number  //web
+    dashClipValue?:number
 
     shadow?: ColorType
     shadowOffset?:number

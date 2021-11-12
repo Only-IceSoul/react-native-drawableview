@@ -59,6 +59,7 @@ import {DrawableView ,DrawableViewS,DrawableViewB, Color} from 'react-native-dra
 
 | Name | description | type | default |
 | --- | --- | --- | --- |
+| svgKey |  (web) required to shadow , stroke start-end.   | String | "" |
 | d | The shape, defined by a series of commands   | String | "" |
 | viewBox | defines the position and dimension, in user space    | Array[Number] (4) | undefined |
 | align | the aligment     | String | xMidYMid |
@@ -76,6 +77,7 @@ import {DrawableView ,DrawableViewS,DrawableViewB, Color} from 'react-native-dra
 | strokeStart | the start | Number | 0 |
 | strokeEnd | the end | Number | 1 |
 | dashArray | required for stroke (web) | Number | 0 |
+| dashClipValue | (web) required for stroke start-end != 0-1. [0 to 1] (rec:0.05) | Number | 0 |
 | shadow | set the sahdow color  | Color | 'black' |
 | shadowOpacity | set the shadow opacity [0 - 1]  | Number | 0 |
 | shadowRadius | the radius | Number | 2 |
