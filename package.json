@@ -1,7 +1,7 @@
 {
   "name": "react-native-drawableview",
   "title": "React Native Drawableview",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "description": "Draw svg paths with shadow, android web ios ",
   "main": "index.js",
   "files": [
@@ -10,6 +10,7 @@
     "android",
     "index.d.ts",
     "index.js",
+    "LICENSE",
     "ios",
     "react-native-drawableview.podspec"
   ],
